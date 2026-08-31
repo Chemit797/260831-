@@ -1,0 +1,10 @@
+# Use only with --exclude-from if a future inventory or narrowly scoped copy of
+# /home/chenyuming/biohub_root_fallback is ever needed.  This file does NOT
+# authorize a broad Biohub copy: the only approved second-wave object is the
+# separately created durable archive.
+#
+# User decision: Kaggle competition data is redownloadable and must never be
+# uploaded, archived, or restored from Trash.
+/data/**
+/data.partial*/**
+**/data.partial*/**

@@ -8,7 +8,7 @@
 
 紧急迁移已完成的证据、精确总量（4.073 GiB）和恢复入口见 [MIGRATION_RECEIPT_20260831.md](MIGRATION_RECEIPT_20260831.md)。
 
-Drive 容量充足后启动的约 389 GiB 全量研究第二波备份及其排除边界见 [BULK_MIGRATION_20260831.md](BULK_MIGRATION_20260831.md)。
+Drive 容量充足后启动的约 307.5 GiB 个人研究第二波备份及其执行状态见 [BULK_MIGRATION_20260831.md](BULK_MIGRATION_20260831.md)。它明确**不包含**他人的 `mousebrain/`、Biohub 竞赛原始 `data/`/`data.partial*`，也不把正在上传的目录误写成已验证恢复包。
 
 Codex 的完整历史、关键恢复状态和新智能体接续方式请阅读 [docs/06_Codex_完整归档与恢复指南.md](docs/06_Codex_完整归档与恢复指南.md)。
 

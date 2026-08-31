@@ -26,6 +26,9 @@ The active research thread is perturbation-based active learning on the mature G
 - Do not delete source files, caches, worktrees, or old runs merely because they are large. Only delete after an explicit reviewed migration manifest authorizes it.
 - Prefer structured documents, ledgers, manifests, and checksums over raw session history.
 - The Codex archive is a private Drive evidence store, not the source of truth for research decisions.
+- Before any bulk-copy, Drive-recovery, or capacity decision, read `BULK_MIGRATION_20260831.md` as well as `MIGRATION_STATUS.md`. Its hard exclusions are ownership decisions: never upload or re-schedule `mousebrain/`, Biohub `data/`, Biohub `data.partial*`, or the cancelled temporary `bulk-biohub-data-full-20260831.tar.zst`.
+- A remote object marked “正在上传” or “待验” is not a verified artifact. Do not call it a backup, delete its source, or silently fill its gaps with a broader unfiltered copy.
+- The second-wave tree is historical evidence, not the default current-work input. Start V7/active-learning work from the verified minimal artifacts and project documentation; retrieve a bulk item only when its specific historical purpose is known.
 
 ## State of this repository
 
