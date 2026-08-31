@@ -18,7 +18,7 @@
 | `02_Biohub_原始数据与历史/durable_archive/bulk-biohub-durable-full-20260831.tar.zst` | `biohub_root_fallback/durable` | 6.02 GiB 压缩档案 | **已验证**：`rclone check --checksum` 报 `0 differences`（1 matching file） | Biohub 的完整 durable 历史证据；保留硬链接，冷备读取 |
 | `03_Omics_GPU_历史资料/01_chenyuming_go-ai-nightly/` | `/mnt/Omics_GPU/chenyuming/go-ai` | 30.79 GiB | **正在直接上传** | GO-AI 夜间运行、模型、结果的历史回溯层 |
 | `03_Omics_GPU_历史资料/02_DiscoBAX-pilot_il2_3seed_archive/bulk-discobax-pilot_il2_3seed-full-20260831.tar.zst` | GeneDisco 外部软链接目标 `DiscoBAX/pilot_il2_3seed` | 114 MiB 源，压缩后约 35.7 MiB | **已验证**：archive 上传后 `rclone check` 报 `0 differences`（1 matching file） | IL-2 pilot 的完整日志/结果快照；不是公开 GeneDisco 数据缓存 |
-| `03_Omics_GPU_历史资料/03_goai-rna-transfer-external/` | RNA transfer 外部输入 | 836 MiB | **已传完，`rclone check` 校验中** | M9.6/RNA 历史输入与 OOF 回溯 |
+| `03_Omics_GPU_历史资料/03_goai-rna-transfer-external/` | RNA transfer 外部输入 | 836 MiB | **已验证**：`rclone check --checksum` 报 `0 differences`（5 matching files） | M9.6/RNA 历史输入与 OOF 回溯 |
 | `04_VirtualCODEX_完整研究档案/` | 用户个人 VirtualCODEX 根（排除 `mousebrain/`） | 约 206.19 GiB | **全树暂缓** | 用户个人的完整网络盘历史；恢复时按相对路径按需取用 |
 | `04_VirtualCODEX_完整研究档案/CYM_DD/FAXP2.0Pro_two_stage_20260831/` | 原先活跃的 FAX 训练目录；已包含在上一行 206.19 GiB 内 | 1.158 GiB / 103 files | **已验证**：训练进程结束后，`rclone check --checksum` 报 `0 differences`（103 matching files） | 可直接恢复的 FAX 终态快照 |
 

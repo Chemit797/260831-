@@ -16,7 +16,7 @@
 | 历史项目筛选 | 已完成 | GeneDisco、GO-AI stage 1、Biohub 均有精确选择清单 |
 | Codex 冷备 | 已完成（预快照） | 3 个去凭据 `.tar.zst` 包已上传至用户的私有 Drive，并完成逐包 rclone checksum 一致性检查 |
 | 上传与校验 | 已完成（紧急迁移范围） | 14 个研究包 + 3 个 Codex 包均已上传、记录 SHA-256 并完成远端一致性检查 |
-| 全量研究第二波 | 正在上传 | Drive 新建 `10_全量研究备份_20260831/`；约 307.5 GiB 的用户个人 runs、OOF、模型与网络盘资料分目录迁移。Project 与 Omics GO-AI 因带宽优先级暂缓；Biohub `durable`、DiscoBAX archive、已结束的 FAX 终态快照均已 `rclone check` 验证；RNA transfer 已传完、checksum 校验中；VirtualCODEX 剩余全树暂缓。个人 Trash 中 Go-AI-Optimal 与 phasea archive 已验证，9.439 GiB producers 分卷正在上传。 |
+| 全量研究第二波 | 正在上传 | Drive 新建 `10_全量研究备份_20260831/`；约 307.5 GiB 的用户个人 runs、OOF、模型与网络盘资料分目录迁移。Project 与 Omics GO-AI 因带宽优先级暂缓；Biohub `durable`、DiscoBAX archive、RNA transfer、已结束的 FAX 终态快照均已 `rclone check` 验证；VirtualCODEX 剩余全树暂缓。个人 Trash 中 Go-AI-Optimal 与 phasea archive 已验证，9.439 GiB producers 分卷正在上传。 |
 
 ## 本次默认迁移边界
 
