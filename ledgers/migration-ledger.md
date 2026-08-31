@@ -9,6 +9,7 @@
 | 2026-08-31 | 建立 `00_迁移控制与清单/` | 已完成 | 上传知识快照和最终 manifests |
 | 2026-08-31 | 制备并上传 14 个精选研究包 | 已完成；共 1,641,096,976 B（1.528 GiB），每项完成 rclone checksum 一致性检查 | 上传 manifest snapshot；准备 Codex 私有冷备 |
 | 2026-08-31 | 上传 Codex 去凭据预快照 | 已完成；recovery-kit、live-context、provider-history 共 2,732,699,354 B（2.545 GiB），每项 rclone checksum 一致 | 如时间允许，在 Codex 静默后增加最终 delta；不删除原件 |
+| 2026-08-31 | 验证 Codex 预快照可读性 | 已完成；三包通过 zstd/tar 结构检查，recovery-kit 实际解包探测 966 文件，凭据/config 路径检查为 0 | 可选：在另一台机器做一次完整恢复演练 |
 
 ## 规则
 

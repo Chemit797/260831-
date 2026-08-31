@@ -15,6 +15,8 @@
 
 每个包都有本地 SHA-256，并在上传后执行了 `rclone check --one-way --checksum`；结果均为 `0 differences found`。完整逻辑 ID、Drive 相对路径、大小、哈希和用途见 [`manifests/artifacts.yaml`](manifests/artifacts.yaml) 与 [`manifests/checksums-20260831.sha256`](manifests/checksums-20260831.sha256)。
 
+本地还对三份 Codex 包执行了 `zstd -t` 与完整 `tar -t` 结构检查，均通过；轻量 recovery-kit 已实际解包探测（966 个文件），三包的文件名级凭据/配置排除检查均为 0 项。
+
 ## Codex 的三份实际档案
 
 这些 `.tar.zst` 包按用户在紧急迁移时的明确授权，直接存入用户管理的私有 Drive。它们不含登录凭据、OAuth token、`auth.json`、`secrets/`、任何 `config.toml` 变体、SSH 密钥或 rclone 配置。
