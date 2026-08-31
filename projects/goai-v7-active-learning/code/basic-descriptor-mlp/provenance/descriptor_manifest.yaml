@@ -1,0 +1,22 @@
+descriptor_status: supplied_by_doctoral_team
+provenance_status: pending_confirmation
+generation_model: unknown
+source_dataset: unknown
+version: unknown
+license: unknown
+obtained_at: 2026-08-19
+mapping:
+  chemical_metadata_key: perturbation_no_concentration
+  chemical_descriptor_key: chemical_name
+  strain_metadata_key: Strains
+  strain_descriptor_key: strain_name
+files:
+  chemical_embeddings.csv:
+    sha256: 77a31912437ec8e0efb429b537aea5c37898c1346ecbdc39b2c424a89320538
+    dimensions: [57, 512]
+  strain_embeddings.csv:
+    sha256: a83510062107a444e67cbfc9ff69314574cc0dc728f8dacb62529eb62987d1e7
+    dimensions: [990, 4096]
+notes:
+  - Quality Control has an all-zero chemical vector and remains in the descriptor table.
+  - Descriptor provenance must be filled from the team source before external reuse.

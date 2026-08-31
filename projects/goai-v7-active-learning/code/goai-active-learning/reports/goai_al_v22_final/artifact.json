@@ -1,0 +1,1805 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "GOAI 主动学习框架 v2.2 技术报告",
+    "description": "Condition-atomic GOAI 酵母扰动蛋白质组主动学习框架的正式多种子执行、独立审计与下一阶段决策。",
+    "generatedAt": "2026-08-24T21:16:02Z",
+    "cards": [
+      {
+        "id": "random_aulc",
+        "description": "五个对齐 seeds、预算 128–1,024 的 interpolation normalized AULC；为保留的默认 comparator。",
+        "dataset": "headline_policy",
+        "sourceId": "report_snapshot_sql",
+        "metrics": [
+          {
+            "label": "Random AULC ×1,000",
+            "field": "random_aulc_x1000",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "coreset_delta",
+        "description": "CoreSet 相对 Random 的配对 AULC 差；方向一致但 95% CI 穿零。",
+        "dataset": "headline_policy",
+        "sourceId": "report_snapshot_sql",
+        "metrics": [
+          {
+            "label": "CoreSet ΔAULC ×1,000",
+            "field": "coreset_delta_x1000",
+            "format": "number",
+            "signed": true
+          }
+        ]
+      },
+      {
+        "id": "uncertainty_delta",
+        "description": "MC-dropout uncertainty 相对 Random 的配对 AULC 差；五个 seeds 均为负向。",
+        "dataset": "headline_policy",
+        "sourceId": "report_snapshot_sql",
+        "metrics": [
+          {
+            "label": "Uncertainty ΔAULC ×1,000",
+            "field": "uncertainty_delta_x1000",
+            "format": "number",
+            "signed": true
+          }
+        ]
+      },
+      {
+        "id": "protein_outputs",
+        "description": "每个 condition 的 matched-control log2-delta response 宽度。",
+        "dataset": "headline_data",
+        "sourceId": "report_snapshot_sql",
+        "metrics": [
+          {
+            "label": "Protein outputs",
+            "field": "proteins",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "evaluation_conditions",
+        "description": "五个 non-reveal evaluation regimes 的 condition 总数；与 candidate pool 零交集。",
+        "dataset": "headline_data",
+        "sourceId": "report_snapshot_sql",
+        "metrics": [
+          {
+            "label": "Evaluation conditions",
+            "field": "evaluation_conditions",
+            "format": "number"
+          },
+          {
+            "label": "Pool/eval overlap",
+            "field": "pool_eval_overlap",
+            "format": "number"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "checkpoint_skill_chart",
+        "title": "Interpolation response skill by budget and acquisition",
+        "subtitle": "Five aligned seeds at four preregistered checkpoints; budget 128 is the shared initial set",
+        "type": "bar",
+        "dataset": "checkpoint_skill",
+        "sourceId": "report_snapshot_sql",
+        "encodings": {
+          "x": {
+            "field": "budget_label",
+            "type": "ordinal",
+            "label": "Experimental budget"
+          },
+          "y": {
+            "field": "mean_x100",
+            "type": "quantitative",
+            "label": "delta_skill_zero × 100",
+            "format": "number"
+          },
+          "color": {
+            "field": "strategy",
+            "type": "nominal",
+            "label": "Acquisition"
+          },
+          "tooltip": [
+            {
+              "field": "mean",
+              "type": "quantitative",
+              "label": "Mean delta_skill_zero",
+              "format": "number"
+            },
+            {
+              "field": "sample_sd",
+              "type": "quantitative",
+              "label": "Sample SD",
+              "format": "number"
+            },
+            {
+              "field": "seed_count",
+              "type": "quantitative",
+              "label": "Seeds",
+              "format": "number"
+            }
+          ]
+        },
+        "yAxisTitle": "delta_skill_zero × 100",
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "representation_chart",
+        "title": "Full-budget response skill by evaluation regime and representation",
+        "subtitle": "All 2,670 candidate conditions, five paired seeds; Combined semantics includes identity and time",
+        "type": "bar",
+        "dataset": "full_representation_skill",
+        "sourceId": "report_snapshot_sql",
+        "encodings": {
+          "x": {
+            "field": "split",
+            "type": "nominal",
+            "label": "Evaluation regime"
+          },
+          "y": {
+            "field": "mean_x100",
+            "type": "quantitative",
+            "label": "delta_skill_zero × 100",
+            "format": "number"
+          },
+          "color": {
+            "field": "representation",
+            "type": "nominal",
+            "label": "Representation"
+          },
+          "tooltip": [
+            {
+              "field": "mean",
+              "type": "quantitative",
+              "label": "Mean delta_skill_zero",
+              "format": "number"
+            },
+            {
+              "field": "sample_sd",
+              "type": "quantitative",
+              "label": "Sample SD",
+              "format": "number"
+            },
+            {
+              "field": "budget",
+              "type": "quantitative",
+              "label": "Budget",
+              "format": "number"
+            }
+          ]
+        },
+        "yAxisTitle": "delta_skill_zero × 100",
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "rank_energy_chart",
+        "title": "Cumulative response energy by rank",
+        "subtitle": "Official-train response only; randomized SVD seed 42; post-hoc oracle audit, not acquisition input",
+        "type": "bar",
+        "dataset": "rank_energy",
+        "sourceId": "report_snapshot_sql",
+        "encodings": {
+          "x": {
+            "field": "rank_label",
+            "type": "ordinal",
+            "label": "Rank"
+          },
+          "y": {
+            "field": "cumulative_energy",
+            "type": "quantitative",
+            "label": "Cumulative energy",
+            "format": "percent"
+          },
+          "color": {
+            "field": "variant",
+            "type": "nominal",
+            "label": "Response variant"
+          }
+        },
+        "yAxisTitle": "Cumulative energy",
+        "valueFormat": "percent",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "data_scope_table",
+        "title": "Condition-level pool and evaluation contract",
+        "subtitle": "Condition counts after global de-duplication and removal of train-overlap validation groups",
+        "dataset": "data_scope",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "role",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "role",
+            "label": "Role / split",
+            "type": "text"
+          },
+          {
+            "field": "conditions",
+            "label": "Conditions",
+            "format": "number"
+          },
+          {
+            "field": "revealable",
+            "label": "Oracle revealable",
+            "type": "text"
+          },
+          {
+            "field": "purpose",
+            "label": "Purpose",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "control_contract_table",
+        "title": "Matched-control contract and sensitivity",
+        "subtitle": "Released metadata lacks treatment-specific vehicle mapping; the comparator is pooled assay overhead",
+        "dataset": "control_contract",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "item",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "item",
+            "label": "Contract item",
+            "type": "text"
+          },
+          {
+            "field": "value",
+            "label": "Reviewed value",
+            "type": "text"
+          },
+          {
+            "field": "interpretation",
+            "label": "Interpretation",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "genedisco_table",
+        "title": "GeneDisco-style active learning versus GOAI",
+        "subtitle": "Conceptual and interface-level borrowing; no GeneDisco or DiscoBAX code graft",
+        "dataset": "genedisco_compare",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "dimension",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "dimension",
+            "label": "Dimension",
+            "type": "text"
+          },
+          {
+            "field": "genedisco_style",
+            "label": "GeneDisco-style setting",
+            "type": "text"
+          },
+          {
+            "field": "goai_framework",
+            "label": "GOAI implementation",
+            "type": "text"
+          },
+          {
+            "field": "implication",
+            "label": "Design implication",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "architecture_table",
+        "title": "Framework modules and extension contracts",
+        "subtitle": "Frozen source-snapshot components used by the formal controller",
+        "dataset": "architecture",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "module",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "module",
+            "label": "Module",
+            "type": "text"
+          },
+          {
+            "field": "responsibility",
+            "label": "Responsibility",
+            "type": "text"
+          },
+          {
+            "field": "extension_contract",
+            "label": "Extension contract",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "protocol_table",
+        "title": "Smoke and formal compute profiles",
+        "subtitle": "Smoke is diagnostic only; scientific decisions use the five-seed formal profile",
+        "dataset": "compute_protocol",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "profile",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "profile",
+            "label": "Profile",
+            "type": "text"
+          },
+          {
+            "field": "seeds",
+            "label": "Seeds",
+            "type": "text"
+          },
+          {
+            "field": "budget_schedule",
+            "label": "Budget schedule",
+            "type": "text"
+          },
+          {
+            "field": "model_training",
+            "label": "Model training",
+            "type": "text"
+          },
+          {
+            "field": "purpose",
+            "label": "Purpose",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "full_metrics_table",
+        "title": "Full-pool combined-representation metric panel",
+        "subtitle": "Five-seed mean ± sample SD; full reference is empirical, not a theoretical upper bound",
+        "dataset": "full_metrics",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "split",
+          "direction": "asc"
+        },
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "split",
+            "label": "Split",
+            "type": "text"
+          },
+          {
+            "field": "rmse",
+            "label": "RMSE",
+            "type": "text"
+          },
+          {
+            "field": "mae",
+            "label": "MAE",
+            "type": "text"
+          },
+          {
+            "field": "skill",
+            "label": "Delta skill",
+            "type": "text"
+          },
+          {
+            "field": "pooled_pcc",
+            "label": "Pooled PCC",
+            "type": "text"
+          },
+          {
+            "field": "condition_pcc",
+            "label": "Condition PCC med.",
+            "type": "text"
+          },
+          {
+            "field": "protein_pcc",
+            "label": "Protein PCC med.",
+            "type": "text"
+          },
+          {
+            "field": "protein_r2_median",
+            "label": "Protein R² med.",
+            "type": "text"
+          },
+          {
+            "field": "protein_r2_mean",
+            "label": "Protein R² mean",
+            "type": "text"
+          },
+          {
+            "field": "protein_r2_positive_fraction",
+            "label": "Protein R² > 0 fraction",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "policy_decision_table",
+        "title": "Preregistered acquisition decision",
+        "subtitle": "Normalized interpolation AULC, budgets 128–1,024; paired two-sided t interval with df=4",
+        "dataset": "policy_decision",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "strategy",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "strategy",
+            "label": "Strategy",
+            "type": "text"
+          },
+          {
+            "field": "mean_aulc",
+            "label": "Mean AULC ± SD",
+            "type": "text"
+          },
+          {
+            "field": "paired_delta",
+            "label": "Paired Δ vs Random",
+            "type": "text"
+          },
+          {
+            "field": "ci95",
+            "label": "95% CI",
+            "type": "text"
+          },
+          {
+            "field": "wins_losses",
+            "label": "Wins / losses",
+            "type": "text"
+          },
+          {
+            "field": "preregistered_gate",
+            "label": "Gate",
+            "type": "text"
+          },
+          {
+            "field": "final_status",
+            "label": "Decision",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "semantic_delta_table",
+        "title": "Paired combined-minus-identity response skill",
+        "subtitle": "Five aligned seeds; 95% t intervals are descriptive outside the primary policy endpoint",
+        "dataset": "paired_semantic_delta",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "budget",
+          "direction": "asc"
+        },
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "budget",
+            "label": "Budget",
+            "format": "number"
+          },
+          {
+            "field": "split",
+            "label": "Split",
+            "type": "text"
+          },
+          {
+            "field": "paired_delta",
+            "label": "Paired Δ skill",
+            "type": "text"
+          },
+          {
+            "field": "ci95",
+            "label": "95% CI",
+            "type": "text"
+          },
+          {
+            "field": "wins_losses",
+            "label": "Wins / losses",
+            "type": "text"
+          },
+          {
+            "field": "interpretation",
+            "label": "Descriptive reading",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "direct_rank_table",
+        "title": "Direct versus rank-64 on the same nested IDs",
+        "subtitle": "v2.1 interpolation delta_skill_zero, seed 42 only; feasibility evidence, not a five-seed comparison",
+        "dataset": "direct_rank64",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "budget",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "budget",
+            "label": "Budget",
+            "format": "number"
+          },
+          {
+            "field": "direct_skill",
+            "label": "Direct",
+            "type": "text"
+          },
+          {
+            "field": "rank64_skill",
+            "label": "Rank-64",
+            "type": "text"
+          },
+          {
+            "field": "delta_direct_minus_rank64",
+            "label": "Direct − rank-64",
+            "type": "text"
+          },
+          {
+            "field": "evidence_scope",
+            "label": "Scope",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "tensor_table",
+        "title": "Tensor occupancy and chemical-fiber completeness",
+        "subtitle": "Five condition axes excluding time unit, which is constant in released data",
+        "dataset": "tensor_feasibility",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "scope",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "scope",
+            "label": "Scope",
+            "type": "text"
+          },
+          {
+            "field": "occupied_cells",
+            "label": "Occupied cells",
+            "type": "text"
+          },
+          {
+            "field": "occupancy",
+            "label": "Occupancy",
+            "type": "text"
+          },
+          {
+            "field": "chemical_complete_fibers",
+            "label": "Complete chemical fibers",
+            "type": "text"
+          },
+          {
+            "field": "implication",
+            "label": "Implication",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "metric_table",
+        "title": "Evaluation metric contract",
+        "subtitle": "All response metrics use the matched-control log2-delta truth mask",
+        "dataset": "metric_definitions",
+        "sourceId": "report_snapshot_sql",
+        "defaultSort": {
+          "field": "metric",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "metric",
+            "label": "Metric",
+            "type": "text"
+          },
+          {
+            "field": "definition",
+            "label": "Definition",
+            "type": "text"
+          },
+          {
+            "field": "interpretation",
+            "label": "Scientific question",
+            "type": "text"
+          },
+          {
+            "field": "direction",
+            "label": "Preferred direction",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "report_snapshot_sql",
+        "label": "GOAI-AL v2.2 reviewed report snapshot SQL",
+        "path": "reports/goai_al_v22_final/sources/goai_report.sql"
+      },
+      {
+        "id": "framework_v22",
+        "label": "Frozen GOAI-AL v2.2 framework specification",
+        "path": "results/direct_multiseed_formal-20260824-v22/source_snapshot/FRAMEWORK_SPEC_V22.md"
+      },
+      {
+        "id": "formal_manifest",
+        "label": "GOAI-AL v2.2 formal root manifest",
+        "path": "results/direct_multiseed_formal-20260824-v22/manifest.json"
+      },
+      {
+        "id": "data_audit",
+        "label": "GOAI condition/control/split audit",
+        "path": "results/direct_multiseed_formal-20260824-v22/data_audit.json"
+      },
+      {
+        "id": "control_audit",
+        "label": "Water–DMSO control sensitivity audit",
+        "path": "results/direct_multiseed_formal-20260824-v22/control_vehicle_sensitivity.csv"
+      },
+      {
+        "id": "formal_audit",
+        "label": "Independent artifact and statistical audit record",
+        "path": "reports/goai_al_v22_final/AUDIT_RECORD.md"
+      },
+      {
+        "id": "v21_representation",
+        "label": "GOAI-AL v2.1 Direct versus rank-64 comparison",
+        "path": "results/pilot_v2_formal-20260824-v21/representation_metrics.csv"
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# GOAI 主动学习框架 v2.2 技术报告"
+      },
+      {
+        "id": "technical_summary",
+        "type": "markdown",
+        "body": "## 技术摘要\n\n**框架已经按任务目标实现、正式执行并完成独立审计。** Query、oracle、control、split、预算、模型、acquisition、指标、原子恢复和产物哈希均有冻结合同；五个 formal seeds 的完整网格通过复算。\n\n**当前应保留 Random。** CoreSet 的 interpolation AULC 在 5/5 seeds 上方向为正，但配对 95% CI 穿过 0，未达到预注册替换门槛；MC-dropout Uncertainty 在 5/5 seeds 上低于 Random。到预算 1,024 时，15 条 seed×policy 曲线均未达到 B80，因此不外推预算。\n\n**结构性探索有清晰边界。** Chemical/strain combined representation 在 cold-start splits 上较好，但 full-budget interpolation 略差；rank-64 只解释约一半 response energy，且同 IDs 实测弱于 Direct。下一阶段可以探索 semantic-aware diversity 与 masked tensor predictor，但不能把本轮结果解释为 semantic causality、tensor 优越或 biological discovery。\n\n> 本报告中的分数均为 retrospective local proxy；不是 organizer official score、submission、Hit Ratio、hit discovery 或实验室因果结论。"
+      },
+      {
+        "id": "headline_metrics",
+        "type": "metric-strip",
+        "cardIds": [
+          "random_aulc",
+          "coreset_delta",
+          "uncertainty_delta",
+          "protein_outputs",
+          "evaluation_conditions"
+        ]
+      },
+      {
+        "id": "metric_key",
+        "type": "markdown",
+        "sourceId": "framework_v22",
+        "body": "### 读图指标键\n\n- **Budget** 是已揭晓的 biological conditions 数量；一次 query 揭晓一个 condition 的整条 4,422-protein response。\n- **delta_skill_zero** = 1 − SSE(model) / SSE(delta=0)，越高越好；0 表示与无扰动响应基线等价。\n- **Normalized AULC** 是 delta_skill_zero 按 budget 轴的梯形积分再除以预算跨度，越高表示同等实验预算下学习更快。\n- **B80** 是首次达到 same-seed initial-to-full 可实现增益 80% 的预算；未达到就报告 not_reached，禁止外推。"
+      },
+      {
+        "id": "section_1",
+        "type": "markdown",
+        "sourceId": "framework_v22",
+        "body": "## 1. 问题已经收敛为“选择 condition，预测整条蛋白响应”\n\n一个 query 由五个 biological axes（strain、去除浓度后的 chemical identity、medium、temperature、perturbation time）与一个 time-unit normalization key 组成。Released data 的 time unit 恒为 minute，但仍保留在 canonical key 中。一次 query 揭晓一个 4,422 维 matched-control log2-delta response 及其 observation mask，而不是一个标量。\n\n运行循环为：L_t --fit--> f_t；Q_t = A(f_t, U_t, L_t)；Y_Qt = Oracle.reveal(Q_t)；L_(t+1) = L_t ∪ Q_t。主决策问题是：在相同 condition 预算和同一 predictor 下，哪一种 acquisition 能提高 interpolation response skill 的整条 learning curve，而不是事后找到较大的变化。"
+      },
+      {
+        "id": "section_2",
+        "type": "markdown",
+        "body": "## 2. 借用 GeneDisco 的主动学习骨架，不借用其 hit 目标\n\nGOAI 保留 pool-based active learning、轮次 acquisition、固定预算和 sample-efficiency 比较这些可迁移原则；真正改变的是 query 与 response 的统计对象。这里每次实验产生一个结构化 condition 的高维 masked proteomic fiber，并且 label 必须经过 matched-control 与 replicate aggregation。\n\n因此，GeneDisco/DiscoBAX 在本项目中是概念与接口参考，而不是代码嫁接。未来方法通过 Acquisition 或 Predictor adapter 进入同一 simulator；Impact、Hit Ratio 和“变化大等于 hit”的目标不进入正式链路。"
+      },
+      {
+        "id": "genedisco_evidence",
+        "type": "table",
+        "tableId": "genedisco_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_3",
+        "type": "markdown",
+        "sourceId": "data_audit",
+        "body": "## 3. Query、Oracle 与 Split 已做 condition-atomic 隔离\n\n全局共有 4,920 个 unique conditions。Official train 的 3,337 个 conditions 被确定性拆成 2,670 个 candidate-pool conditions 与 667 个 interpolation conditions；另有 chemical、strain、both、time 四个 non-reveal regimes。原 released split 中 46 个 train/val_time condition 重叠被显式移除，52 条 validation treatment measurements 没有进入 train oracle aggregation。修复后 pool 与全部 evaluation IDs 的交集为 0。\n\nRetrospectiveOracle 只服务 candidate IDs，evaluation truth 只进入 scorer。Acquisition 只接收 public descriptors、revealed IDs、当前 predictor/uncertainty 和 budget state；round receipts 禁止 labels、truth、predictions、model state 与 oracle values。\n\nOracle response 的聚合顺序被冻结：先对每条 treatment measurement 计算 matched-control log2 delta，再仅使用该 condition 被保留 split 的 treatment rows，按 protein 做 mean(skipna) 聚合。一个 condition 有 1–6 条可用 matched measurements，中位数为 1；replicate count 与 observation mask 同时保留用于审计。"
+      },
+      {
+        "id": "data_scope_evidence",
+        "type": "table",
+        "tableId": "data_scope_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_3_control",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "### Control 是冻结的 assay overhead，不是 treatment-specific vehicle\n\n默认 comparator 是八字段 exact measurement context 内所有 Water/DMSO control measurements 的逐蛋白 log2 直接等权均值；不能先按 control type 等权，也不能从 chemical、perturbation ID、source、plate 或 well 推断 treatment vehicle。7,884/7,884 treatment measurements 都有 exact-context control，但 1,478 条只能依赖 cross-split controls，其中 official-train 12 条。\n\nReleased metadata 不含 treatment-specific vehicle mapping，所以报告不称其为 vehicle-matched comparator。429 个双 control contexts 的 Water–DMSO global RMS 为 0.336909，按 treatment frequency 加权为 0.338644；这只是一项 post-hoc oracle sensitivity audit，未进入 acquisition 或训练特征。"
+      },
+      {
+        "id": "control_evidence",
+        "type": "table",
+        "tableId": "control_contract_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_4",
+        "type": "markdown",
+        "sourceId": "framework_v22",
+        "body": "## 4. Framework 以权限边界为主线，而不是以单个算法为中心\n\nGroupedDataset → Public features → PoolState → Predictor → AcquisitionContext → Oracle.reveal → Evaluator 是冻结的数据流。Response label 只在 predictor fit 与 scorer 中出现；acquisition 不能持有完整 dataset 或 oracle。\n\n新增 acquisition 只实现公共 context 到 batch IDs 的选择；新增 predictor 保持 fit/predict/uncertainty 协议。CP/Tucker 或其他 masked tensor model 应作为 Predictor adapter：输入相同 revealed IDs、response/mask，输出同一 4,422 维 response，并继续使用当前 split、预算、receipt 与 evaluator。"
+      },
+      {
+        "id": "architecture_evidence",
+        "type": "table",
+        "tableId": "architecture_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_5",
+        "type": "markdown",
+        "body": "## 5. Compute-aware 协议先做门禁，再做五 seed 正式判定\n\nSmoke 仅检查真实数据加载、GPU 训练、atomic staging/resume、hash inventory 和精确输出网格；科学判定完全来自 formal profile。Formal 使用 Direct 4,422-output dropout MLP：hidden 128、dropout 0.1、AdamW learning rate 0.001、weight decay 0.0002、batch 512、target-scale floor 0.05。每个 acquired budget 从头重训，三策略在同一 run seed 共享初始 IDs，模型与 acquisition seed 只依赖 (run_seed, current_budget)。\n\nFormal 从 initial 128 开始执行 7 个 acquisition rounds，每次增加 128，因而在 128/256/384/512/640/768/896/1,024 共 8 个 budgets 从头 fit；只在预注册的 128/256/512/1,024 四个 checkpoints 做正式曲线评价。真实数据 cache 命中，cache identity key 为 9744a3a995c3be3cc212e432f8fb271478620d847a6a7e569464bf85d3685d0f。\n\nFormal 运行实际完成 150 次训练 fits（另有 5 个复用的 semantic full-reference receipts）；非复用 fit 的 train_seconds 合计约 261 秒，五个 seed-run 的墙钟和约 458 秒，fresh 启动到最后 seed 完成约 466 秒。GPU 为 A100 40GB，PyTorch deterministic algorithms 开启，cuDNN benchmark 与 TF32 关闭。最终 resume 只验证并跳过五个 hash-valid seeds，没有重写 seed payload。"
+      },
+      {
+        "id": "protocol_evidence",
+        "type": "table",
+        "tableId": "protocol_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_6",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "## 6. Random baseline 稳定学习，但 1,024 预算仍未达到 B80\n\nRandom 的 interpolation delta_skill_zero 从预算 128 的 0.0623 上升到预算 1,024 的 0.2047；同一 seed 的三策略在 128 完全相同，证明初始集合公平。下图只展示四个注册 checkpoint，因此用 grouped bars，而不把稀疏点包装成连续趋势。"
+      },
+      {
+        "id": "checkpoint_skill_evidence",
+        "type": "chart",
+        "chartId": "checkpoint_skill_chart",
+        "layout": "full"
+      },
+      {
+        "id": "section_6_interpretation",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "### Full reference 说明还存在可学习空间，但不是理论上界\n\n五 seed 的 combined-representation full reference 在 interpolation 上为 0.2598 ± 0.0018。B80 按“从同 seed 初始值到 same-seed full reference 的可实现增益 80%”定义；15/15 seed×policy curves 到 1,024 均为 not_reached，所以没有制造外推预算。辅助 full-reference panel 也显示 OOD 难度不均：chemical-only 与 both 的 skill 接近 0，而 time holdout 与 interpolation 更高。"
+      },
+      {
+        "id": "full_metrics_evidence",
+        "type": "table",
+        "tableId": "full_metrics_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_7",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "## 7. CoreSet 有正向信号但未确认，Uncertainty 不应晋升\n\nRandom 是均匀无放回；CoreSet 在 495 维 target-free descriptor 上做 farthest-first；Uncertainty 使用同一 Direct predictor 的 8-pass MC-dropout response variance。CoreSet 的 mean AULC 最高，且五个 seeds 均高于 Random，但配对差的 95% CI 为 [-0.001646, 0.016305]，CI 下界没有大于 0，因此不能越过预注册替换门槛。Uncertainty 的配对差为负，95% CI 全部低于 0。\n\n最终判定是 **retain Random**。CoreSet 可作为“值得复验”的候选，但不能写成统计确认优于 Random；对 Uncertainty，下一步应先评估 calibration，并比较 ensemble 等替代估计，再恢复 acquisition 比较。"
+      },
+      {
+        "id": "policy_evidence",
+        "type": "table",
+        "tableId": "policy_decision_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_8_semantics",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "## 8. 表征、低秩与张量只提供下一阶段路线证据\n\n**Combined representation 的效应依赖 split 与预算。** 它包含 identity、continuous time 与冻结的 chemical/strain semantics。Full budget 时 chemical-only、strain-only 和 both cold-start 的 delta_skill_zero 都高于 identity+time；但 interpolation 低 0.00366，且配对 CI 完全为负。下图因此是 regime comparison，而不是“语义普遍更好”的排行榜。"
+      },
+      {
+        "id": "representation_evidence",
+        "type": "chart",
+        "chartId": "representation_chart",
+        "layout": "full"
+      },
+      {
+        "id": "section_8_semantic_limits",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "### Cold-start 改善不能被解释为 semantic causality\n\n预算 128 和 512 的 chemical/strain cold-start 配对差多数为正，而 interpolation 的 CI 穿零；full interpolation 则轻微但一致地负向。因为没有 shuffled-semantic negative control，且五个 strain identity 只是高置信 public candidate mappings、并非 organizer-verified，结果只能称为两套固定 representation 的预测差异。DHY210 的连续语义保持 zero/missing。"
+      },
+      {
+        "id": "semantic_delta_evidence",
+        "type": "table",
+        "tableId": "semantic_delta_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_8_lowrank",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "### Rank-64 的压缩结构存在，但覆盖不足且实测弱于 Direct\n\nOfficial-train response spectrum 在 rank 64 只保留 centered response 的 53.17% 或 per-protein standardized response 的 54.23%；rank 128 也只有约 62%。这支持继续研究压缩结构，却不足以假定低秩 head 可以无损替代 Direct。"
+      },
+      {
+        "id": "rank_energy_evidence",
+        "type": "chart",
+        "chartId": "rank_energy_chart",
+        "layout": "full"
+      },
+      {
+        "id": "section_8_lowrank_interpretation",
+        "type": "markdown",
+        "sourceId": "report_snapshot_sql",
+        "body": "在 v2.1 同一 nested IDs、seed 42 的可比实验里，Direct 在预算 128、512 和 full 2,670 上都高于 rank-64。该单 seed 结果只用于冻结 v2.2 Direct backbone，不与 v2.2 五 seed estimates 合并。Tensor audit 则显示 official-train cell occupancy 很高，但 chemical fibers 几乎不完整；下一步若尝试 CP/Tucker，应采用 masked/inductive 形式并保持同 IDs、同预算、同 evaluator。"
+      },
+      {
+        "id": "direct_rank_evidence",
+        "type": "table",
+        "tableId": "direct_rank_table",
+        "layout": "full"
+      },
+      {
+        "id": "tensor_evidence",
+        "type": "table",
+        "tableId": "tensor_table",
+        "layout": "full"
+      },
+      {
+        "id": "section_9",
+        "type": "markdown",
+        "sourceId": "framework_v22",
+        "body": "## 9. 指标评价的是 response prediction 与 sample efficiency，不是假定的 hit\n\n主指标 delta_skill_zero = 1 - SSE(model) / SSE(delta=0) 使用 matched-control 无响应作为预注册 null；它是本地 normalized skill，不是 organizer official Delta Skill。Condition PCC、protein PCC/R² 和 pooled PCC 分别回答单 condition 蛋白模式、单 protein 跨 conditions 泛化与全局线性模式。AULC 必须按 budget 轴做梯形积分；B80 使用 same-seed full-reference 可实现增益并禁止外推。\n\nImpact、Hit Ratio、hit recall 与旧 hybrid 逻辑只存在于 legacy pilot_v1，没有进入 v2.1/v2.2 正式结果。大的 proteomic change 不等于 biological hit。"
+      },
+      {
+        "id": "metric_evidence",
+        "type": "table",
+        "tableId": "metric_table",
+        "layout": "full"
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "sourceId": "formal_audit",
+        "body": "### 可信边界与尚未完成的科学证据\n\n独立 artifact audit 与统计复算均为 GO，未发现 P0/P1；但这只证明本地 retrospective benchmark、权限边界与保存的计算一致。Full reference 不是理论上界；辅助 split、representation 与多指标 CI 没有做多重比较校正；control 不是 vehicle-specific；没有 prospective wet-lab validation、organizer official scorer、submission、shuffled semantic negative control、dedicated condition/response coverage endpoint 或正式 tensor acquisition 实验。\n\n这些缺口不会推翻“保留 Random”这一预注册判定，却限定了可声称的外推范围。"
+      },
+      {
+        "id": "section_10",
+        "type": "markdown",
+        "body": "## 10. 下一阶段应围绕 cold-start、coverage 与真实实验合同推进\n\n1. **冻结共同 comparator。** 保留 Random + Direct，复用相同 condition IDs、initial sets、budgets、seeds 与 response metrics。\n2. **优先改进 cold-start acquisition。** 比较 semantic-aware diversity/density、cluster-balanced batch 或 TypiClust 类方法，并单独预注册 chemical/strain cold-start 主终点。\n3. **谨慎复验 CoreSet。** 其方向值得增加 power，但正式结论仍是未确认；不做本轮 post-hoc 策略或超参数 sweep。\n4. **降级当前 Uncertainty。** 先评估 uncertainty calibration、deep ensemble 或更合适的 high-dimensional response uncertainty，再恢复 acquisition 比较。\n5. **做小规模 masked tensor predictor。** 先在 interpolation 上以 CP/Tucker adapter 与 Direct 同 IDs 比较，并按 chemical fiber coverage 分层；没有实测优势前不晋升。\n6. **补强实验与身份合同。** 获取显式 treatment–vehicle mapping、确认 strain identities，并加入 shuffled/blocked semantic negative control。\n7. **走向 prospective validation。** 在下一批真实 assay 中冻结选点清单、成本与失败规则，验证 retrospective sample-efficiency 是否能转化为 wet-lab learning gain。\n\n### 仍需回答的问题\n\n- Chemical/strain cold-start 的表征增益在 shuffled/blocked semantic negative control 下是否仍保留？\n- Masked CP/Tucker predictor 在同 IDs、同预算和同 evaluator 下能否稳定胜过 Direct？\n- Retrospective learning-curve 增益能否在真实 wet-lab assay 的失败率、成本和 replicate 约束下转化为 prospective gain？\n\n本阶段到此停止：框架目的已经可信完成，后续工作应作为新的预注册实验，而不是继续在当前 formal 结果上追加选择性分析。"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-24T21:16:02Z",
+    "status": "ready",
+    "datasets": {
+      "headline_policy": [
+        {
+          "random_aulc_x1000": 158.5001049416481,
+          "coreset_delta_x1000": 7.329779867006048,
+          "uncertainty_delta_x1000": -13.38261920633887
+        }
+      ],
+      "headline_data": [
+        {
+          "proteins": 4422,
+          "evaluation_conditions": 2250,
+          "pool_eval_overlap": 0
+        }
+      ],
+      "checkpoint_skill": [
+        {
+          "strategy": "Random",
+          "budget": 128,
+          "budget_label": "128",
+          "mean": 0.06227716254400073,
+          "sample_sd": 0.02202047902708675,
+          "mean_x100": 6.227716254400073,
+          "seed_count": 5
+        },
+        {
+          "strategy": "Random",
+          "budget": 256,
+          "budget_label": "256",
+          "mean": 0.12100729483998704,
+          "sample_sd": 0.007266997275209,
+          "mean_x100": 12.100729483998704,
+          "seed_count": 5
+        },
+        {
+          "strategy": "Random",
+          "budget": 512,
+          "budget_label": "512",
+          "mean": 0.16247290895646346,
+          "sample_sd": 0.00558610260409058,
+          "mean_x100": 16.247290895646348,
+          "seed_count": 5
+        },
+        {
+          "strategy": "Random",
+          "budget": 1024,
+          "budget_label": "1,024",
+          "mean": 0.20471624209508277,
+          "sample_sd": 0.003522735946202725,
+          "mean_x100": 20.471624209508278,
+          "seed_count": 5
+        },
+        {
+          "strategy": "CoreSet",
+          "budget": 128,
+          "budget_label": "128",
+          "mean": 0.06227716254400073,
+          "sample_sd": 0.02202047902708675,
+          "mean_x100": 6.227716254400073,
+          "seed_count": 5
+        },
+        {
+          "strategy": "CoreSet",
+          "budget": 256,
+          "budget_label": "256",
+          "mean": 0.12582631992260412,
+          "sample_sd": 0.01346526752528422,
+          "mean_x100": 12.582631992260412,
+          "seed_count": 5
+        },
+        {
+          "strategy": "CoreSet",
+          "budget": 512,
+          "budget_label": "512",
+          "mean": 0.1719471473583391,
+          "sample_sd": 0.003063267733722018,
+          "mean_x100": 17.19471473583391,
+          "seed_count": 5
+        },
+        {
+          "strategy": "CoreSet",
+          "budget": 1024,
+          "budget_label": "1,024",
+          "mean": 0.21254484521482767,
+          "sample_sd": 0.004076109417689754,
+          "mean_x100": 21.254484521482766,
+          "seed_count": 5
+        },
+        {
+          "strategy": "Uncertainty",
+          "budget": 128,
+          "budget_label": "128",
+          "mean": 0.06227716254400073,
+          "sample_sd": 0.02202047902708675,
+          "mean_x100": 6.227716254400073,
+          "seed_count": 5
+        },
+        {
+          "strategy": "Uncertainty",
+          "budget": 256,
+          "budget_label": "256",
+          "mean": 0.10414292686124202,
+          "sample_sd": 0.006167905907310947,
+          "mean_x100": 10.414292686124202,
+          "seed_count": 5
+        },
+        {
+          "strategy": "Uncertainty",
+          "budget": 512,
+          "budget_label": "512",
+          "mean": 0.14094638474578552,
+          "sample_sd": 0.003812370718619003,
+          "mean_x100": 14.094638474578552,
+          "seed_count": 5
+        },
+        {
+          "strategy": "Uncertainty",
+          "budget": 1024,
+          "budget_label": "1,024",
+          "mean": 0.20281513717297242,
+          "sample_sd": 0.003863832430212846,
+          "mean_x100": 20.28151371729724,
+          "seed_count": 5
+        }
+      ],
+      "policy_decision": [
+        {
+          "strategy": "Random",
+          "mean_aulc": "0.158500 ± 0.004163",
+          "paired_delta": "reference",
+          "ci95": "—",
+          "wins_losses": "—",
+          "preregistered_gate": "default comparator",
+          "final_status": "保留默认"
+        },
+        {
+          "strategy": "CoreSet",
+          "mean_aulc": "0.165830 ± 0.005114",
+          "paired_delta": "+0.007330",
+          "ci95": "[-0.001646, 0.016305]",
+          "wins_losses": "5 / 0",
+          "preregistered_gate": "未通过：CI 下界不大于 0",
+          "final_status": "不替换 Random"
+        },
+        {
+          "strategy": "Uncertainty",
+          "mean_aulc": "0.145117 ± 0.002613",
+          "paired_delta": "-0.013383",
+          "ci95": "[-0.017284, -0.009481]",
+          "wins_losses": "0 / 5",
+          "preregistered_gate": "未通过",
+          "final_status": "不替换 Random"
+        }
+      ],
+      "data_scope": [
+        {
+          "role": "Official train",
+          "conditions": 3337,
+          "revealable": "部分",
+          "purpose": "pool 与 interpolation 的共同母集"
+        },
+        {
+          "role": "Candidate pool",
+          "conditions": 2670,
+          "revealable": "是",
+          "purpose": "唯一允许 acquisition/query 的 conditions"
+        },
+        {
+          "role": "Interpolation",
+          "conditions": 667,
+          "revealable": "否",
+          "purpose": "official-train 内 condition-atomic 缺组合评估"
+        },
+        {
+          "role": "val_chem_only",
+          "conditions": 503,
+          "revealable": "否",
+          "purpose": "未见 chemical 的 cold-start 评估"
+        },
+        {
+          "role": "val_strain_only",
+          "conditions": 874,
+          "revealable": "否",
+          "purpose": "未见 strain 的 cold-start 评估"
+        },
+        {
+          "role": "val_both",
+          "conditions": 126,
+          "revealable": "否",
+          "purpose": "chemical 与 strain 同时未见"
+        },
+        {
+          "role": "val_time",
+          "conditions": 80,
+          "revealable": "否",
+          "purpose": "移除 46 个 train-overlap conditions 后的时间评估"
+        },
+        {
+          "role": "Evaluation total",
+          "conditions": 2250,
+          "revealable": "否",
+          "purpose": "五个评估 split 合计"
+        },
+        {
+          "role": "All unique conditions",
+          "conditions": 4920,
+          "revealable": "—",
+          "purpose": "condition-atomic 全局索引"
+        }
+      ],
+      "control_contract": [
+        {
+          "item": "Policy",
+          "value": "pooled_exact_context_water_dmso",
+          "interpretation": "八字段 exact assay context 内逐 control measurement 的 log2 等权均值"
+        },
+        {
+          "item": "Control measurements",
+          "value": "956",
+          "interpretation": "不进入 query、descriptor 或 predictor feature"
+        },
+        {
+          "item": "Exact control contexts",
+          "value": "479",
+          "interpretation": "429 同时有 Water/DMSO；41 仅 DMSO；9 仅 Water"
+        },
+        {
+          "item": "Exactly matched treatments",
+          "value": "7,884 / 7,884",
+          "interpretation": "7,293 双类型；450 仅 DMSO；141 仅 Water"
+        },
+        {
+          "item": "Cross-split-only control support",
+          "value": "1,478 treatments",
+          "interpretation": "其中 official-train treatment 12 条；冻结为 assay overhead"
+        },
+        {
+          "item": "Treatment vehicle mapping",
+          "value": "Unavailable",
+          "interpretation": "不得声称 comparator 是 vehicle-specific，也不得从其他字段推断"
+        },
+        {
+          "item": "Water–DMSO sensitivity",
+          "value": "RMS 0.336909；frequency-weighted 0.338644",
+          "interpretation": "post-hoc oracle audit；acquisition/training input=false"
+        }
+      ],
+      "genedisco_compare": [
+        {
+          "dimension": "主动学习骨架",
+          "genedisco_style": "pool-based、轮次 acquisition、固定预算",
+          "goai_framework": "保留相同抽象",
+          "implication": "可以复用接口与公平比较原则"
+        },
+        {
+          "dimension": "单次 query",
+          "genedisco_style": "一个 intervention 的标量结果",
+          "goai_framework": "一个结构化 condition 的 4,422 维 masked response",
+          "implication": "query 成本与信息量均为 condition-level"
+        },
+        {
+          "dimension": "输入结构",
+          "genedisco_style": "主要由 intervention identity 描述",
+          "goai_framework": "strain × chemical × medium × temperature × time",
+          "implication": "需要 target-free descriptor 与严格 split"
+        },
+        {
+          "dimension": "response 构造",
+          "genedisco_style": "通常直接使用 phenotype",
+          "goai_framework": "matched-control log2 delta 与 replicate 聚合",
+          "implication": "control 是 assay overhead，不是 acquisition feature"
+        },
+        {
+          "dimension": "评价目标",
+          "genedisco_style": "常见 hit/discovery 或 scalar prediction",
+          "goai_framework": "预测完整 response landscape 与 sample efficiency",
+          "implication": "不得照搬 Hit Ratio"
+        },
+        {
+          "dimension": "代码关系",
+          "genedisco_style": "参考生态",
+          "goai_framework": "概念与接口层借鉴；无代码嫁接",
+          "implication": "新算法通过 Acquisition/Predictor adapter 接入"
+        }
+      ],
+      "architecture": [
+        {
+          "module": "data.py",
+          "responsibility": "condition ID、control、split、cache",
+          "extension_contract": "保持 condition-atomic 与 control contract"
+        },
+        {
+          "module": "semantics.py",
+          "responsibility": "target-free identity/chemical/strain encoder",
+          "extension_contract": "新增资产必须 hash-pinned 且 response_used=false"
+        },
+        {
+          "module": "simulator.py",
+          "responsibility": "RetrospectiveOracle、PoolState、BudgetSchedule、receipts",
+          "extension_contract": "禁止未 reveal labels 与 evaluation truth 进入策略"
+        },
+        {
+          "module": "model.py",
+          "responsibility": "Direct/low-rank Predictor 与不确定性",
+          "extension_contract": "新模型实现同一 fit/predict/uncertainty 协议"
+        },
+        {
+          "module": "acquisition.py",
+          "responsibility": "Random、CoreSet、MC-dropout uncertainty",
+          "extension_contract": "新策略只接收 immutable public context"
+        },
+        {
+          "module": "metrics.py",
+          "responsibility": "response panel、AULC、B80",
+          "extension_contract": "保持 truth-only mask 与预注册方向"
+        },
+        {
+          "module": "direct_multiseed.py",
+          "responsibility": "公平 seeds、cold restart、atomic resume、exact-grid gate",
+          "extension_contract": "新 runner 必须保存 source/config/spec snapshot"
+        }
+      ],
+      "compute_protocol": [
+        {
+          "profile": "Smoke",
+          "seeds": "42, 43",
+          "budget_schedule": "initial/batch 32；checkpoints 32/64/96",
+          "model_training": "2 epochs；MC 2；Direct",
+          "purpose": "仅验证端到端、恢复与产物合同"
+        },
+        {
+          "profile": "Formal",
+          "seeds": "42–46",
+          "budget_schedule": "initial/batch 128；checkpoints 128/256/512/1024",
+          "model_training": "80 epochs；MC 8；每 budget cold restart",
+          "purpose": "预注册五 seed 策略判定"
+        }
+      ],
+      "full_metrics": [
+        {
+          "split": "interpolation",
+          "rmse": ".3458 ± .0004",
+          "mae": ".2285 ± .0003",
+          "skill": ".2598 ± .0018",
+          "pooled_pcc": ".5098 ± .0017",
+          "condition_pcc": ".3619 ± .0029",
+          "protein_pcc": ".4198 ± .0025",
+          "protein_r2_median": ".1702 ± .0020",
+          "protein_r2_mean": ".2017 ± .0019",
+          "protein_r2_positive_fraction": ".9866 ± .0010"
+        },
+        {
+          "split": "val_chem_only",
+          "rmse": ".3185 ± .0009",
+          "mae": ".2107 ± .0008",
+          "skill": ".0076 ± .0059",
+          "pooled_pcc": ".1992 ± .0022",
+          "condition_pcc": ".1724 ± .0024",
+          "protein_pcc": ".1704 ± .0040",
+          "protein_r2_median": "-.0052 ± .0043",
+          "protein_r2_mean": "-.0122 ± .0065",
+          "protein_r2_positive_fraction": ".4606 ± .0306"
+        },
+        {
+          "split": "val_strain_only",
+          "rmse": ".3586 ± .0005",
+          "mae": ".2366 ± .0004",
+          "skill": ".1175 ± .0026",
+          "pooled_pcc": ".3545 ± .0037",
+          "condition_pcc": ".2157 ± .0082",
+          "protein_pcc": ".2865 ± .0029",
+          "protein_r2_median": ".0482 ± .0030",
+          "protein_r2_mean": ".0434 ± .0032",
+          "protein_r2_positive_fraction": ".7122 ± .0102"
+        },
+        {
+          "split": "val_both",
+          "rmse": ".3244 ± .0007",
+          "mae": ".2111 ± .0006",
+          "skill": ".0020 ± .0042",
+          "pooled_pcc": ".1681 ± .0054",
+          "condition_pcc": ".1098 ± .0078",
+          "protein_pcc": ".1245 ± .0041",
+          "protein_r2_median": "-.0294 ± .0033",
+          "protein_r2_mean": "-.1191 ± .0035",
+          "protein_r2_positive_fraction": ".3499 ± .0159"
+        },
+        {
+          "split": "val_time",
+          "rmse": ".3766 ± .0007",
+          "mae": ".2513 ± .0003",
+          "skill": ".2796 ± .0026",
+          "pooled_pcc": ".5285 ± .0024",
+          "condition_pcc": ".3308 ± .0058",
+          "protein_pcc": ".4485 ± .0023",
+          "protein_r2_median": ".1721 ± .0021",
+          "protein_r2_mean": ".1510 ± .0063",
+          "protein_r2_positive_fraction": ".8556 ± .0057"
+        }
+      ],
+      "full_representation_skill": [
+        {
+          "split": "Interpolation",
+          "representation": "Identity + time",
+          "mean": 0.26348504382872884,
+          "sample_sd": 0.001890093103027974,
+          "mean_x100": 26.348504382872886,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Interpolation",
+          "representation": "Combined semantics",
+          "mean": 0.2598269013902549,
+          "sample_sd": 0.00176586461227343,
+          "mean_x100": 25.98269013902549,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Chemical cold-start",
+          "representation": "Identity + time",
+          "mean": -0.11357232942504011,
+          "sample_sd": 0.011605688471162104,
+          "mean_x100": -11.35723294250401,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Chemical cold-start",
+          "representation": "Combined semantics",
+          "mean": 0.0075678203595553,
+          "sample_sd": 0.005897568241458644,
+          "mean_x100": 0.75678203595553,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Strain cold-start",
+          "representation": "Identity + time",
+          "mean": 0.06829871735736584,
+          "sample_sd": 0.002796636281977838,
+          "mean_x100": 6.829871735736584,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Strain cold-start",
+          "representation": "Combined semantics",
+          "mean": 0.11754323445388185,
+          "sample_sd": 0.002623548001865272,
+          "mean_x100": 11.754323445388184,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Both cold-start",
+          "representation": "Identity + time",
+          "mean": -0.02739149910398884,
+          "sample_sd": 0.003881271202877441,
+          "mean_x100": -2.739149910398884,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Both cold-start",
+          "representation": "Combined semantics",
+          "mean": 0.00203138944696688,
+          "sample_sd": 0.00417749651793726,
+          "mean_x100": 0.203138944696688,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Time holdout",
+          "representation": "Identity + time",
+          "mean": 0.27842753471744897,
+          "sample_sd": 0.003484559751201604,
+          "mean_x100": 27.842753471744896,
+          "budget": 2670,
+          "seed_count": 5
+        },
+        {
+          "split": "Time holdout",
+          "representation": "Combined semantics",
+          "mean": 0.2796466030503758,
+          "sample_sd": 0.002644408962950958,
+          "mean_x100": 27.96466030503758,
+          "budget": 2670,
+          "seed_count": 5
+        }
+      ],
+      "paired_semantic_delta": [
+        {
+          "budget": 128,
+          "split": "interpolation",
+          "paired_delta": "+0.002362",
+          "ci95": "[-0.011964, +0.016688]",
+          "wins_losses": "3 / 2",
+          "interpretation": "不确定"
+        },
+        {
+          "budget": 128,
+          "split": "val_chem_only",
+          "paired_delta": "+0.102454",
+          "ci95": "[+0.084152, +0.120756]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 128,
+          "split": "val_strain_only",
+          "paired_delta": "+0.022008",
+          "ci95": "[+0.001307, +0.042709]",
+          "wins_losses": "4 / 1",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 128,
+          "split": "val_both",
+          "paired_delta": "+0.071643",
+          "ci95": "[+0.034025, +0.109260]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 128,
+          "split": "val_time",
+          "paired_delta": "-0.011715",
+          "ci95": "[-0.062882, +0.039452]",
+          "wins_losses": "3 / 2",
+          "interpretation": "不确定"
+        },
+        {
+          "budget": 512,
+          "split": "interpolation",
+          "paired_delta": "+0.005722",
+          "ci95": "[-0.000458, +0.011903]",
+          "wins_losses": "4 / 1",
+          "interpretation": "不确定"
+        },
+        {
+          "budget": 512,
+          "split": "val_chem_only",
+          "paired_delta": "+0.082197",
+          "ci95": "[+0.069155, +0.095239]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 512,
+          "split": "val_strain_only",
+          "paired_delta": "+0.046082",
+          "ci95": "[+0.016616, +0.075548]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 512,
+          "split": "val_both",
+          "paired_delta": "+0.024817",
+          "ci95": "[+0.001894, +0.047739]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 512,
+          "split": "val_time",
+          "paired_delta": "+0.007214",
+          "ci95": "[-0.001333, +0.015762]",
+          "wins_losses": "4 / 1",
+          "interpretation": "不确定"
+        },
+        {
+          "budget": 2670,
+          "split": "interpolation",
+          "paired_delta": "-0.003658",
+          "ci95": "[-0.005561, -0.001756]",
+          "wins_losses": "0 / 5",
+          "interpretation": "负向"
+        },
+        {
+          "budget": 2670,
+          "split": "val_chem_only",
+          "paired_delta": "+0.121140",
+          "ci95": "[+0.104732, +0.137549]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 2670,
+          "split": "val_strain_only",
+          "paired_delta": "+0.049245",
+          "ci95": "[+0.042889, +0.055600]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 2670,
+          "split": "val_both",
+          "paired_delta": "+0.029423",
+          "ci95": "[+0.020492, +0.038354]",
+          "wins_losses": "5 / 0",
+          "interpretation": "正向描述性证据"
+        },
+        {
+          "budget": 2670,
+          "split": "val_time",
+          "paired_delta": "+0.001219",
+          "ci95": "[-0.006115, +0.008553]",
+          "wins_losses": "2 / 3",
+          "interpretation": "不确定"
+        }
+      ],
+      "rank_energy": [
+        {
+          "rank": 8,
+          "rank_label": "8",
+          "variant": "Centered response",
+          "cumulative_energy": 0.2975533362630767
+        },
+        {
+          "rank": 16,
+          "rank_label": "16",
+          "variant": "Centered response",
+          "cumulative_energy": 0.3687735268051574
+        },
+        {
+          "rank": 32,
+          "rank_label": "32",
+          "variant": "Centered response",
+          "cumulative_energy": 0.4464219990035972
+        },
+        {
+          "rank": 64,
+          "rank_label": "64",
+          "variant": "Centered response",
+          "cumulative_energy": 0.5316853679758635
+        },
+        {
+          "rank": 128,
+          "rank_label": "128",
+          "variant": "Centered response",
+          "cumulative_energy": 0.6187440806661079
+        },
+        {
+          "rank": 8,
+          "rank_label": "8",
+          "variant": "Per-protein standardized",
+          "cumulative_energy": 0.3116906182251092
+        },
+        {
+          "rank": 16,
+          "rank_label": "16",
+          "variant": "Per-protein standardized",
+          "cumulative_energy": 0.386385807656376
+        },
+        {
+          "rank": 32,
+          "rank_label": "32",
+          "variant": "Per-protein standardized",
+          "cumulative_energy": 0.4623148961241879
+        },
+        {
+          "rank": 64,
+          "rank_label": "64",
+          "variant": "Per-protein standardized",
+          "cumulative_energy": 0.542291845668172
+        },
+        {
+          "rank": 128,
+          "rank_label": "128",
+          "variant": "Per-protein standardized",
+          "cumulative_energy": 0.6220606548833963
+        }
+      ],
+      "direct_rank64": [
+        {
+          "budget": 128,
+          "direct_skill": "0.063980",
+          "rank64_skill": "0.043628",
+          "delta_direct_minus_rank64": "+0.020352",
+          "evidence_scope": "v2.1 same IDs, seed 42"
+        },
+        {
+          "budget": 512,
+          "direct_skill": "0.155130",
+          "rank64_skill": "0.084643",
+          "delta_direct_minus_rank64": "+0.070487",
+          "evidence_scope": "v2.1 same IDs, seed 42"
+        },
+        {
+          "budget": 2670,
+          "direct_skill": "0.267194",
+          "rank64_skill": "0.207050",
+          "delta_direct_minus_rank64": "+0.060144",
+          "evidence_scope": "v2.1 same IDs, seed 42"
+        }
+      ],
+      "tensor_feasibility": [
+        {
+          "scope": "Official train",
+          "occupied_cells": "3,337 / 3,552",
+          "occupancy": "93.95%",
+          "chemical_complete_fibers": "4 / 96 (4.17%)",
+          "implication": "总 occupancy 高，但 chemical fibers 多数不完整"
+        },
+        {
+          "scope": "Candidate pool",
+          "occupied_cells": "2,670 / 3,552",
+          "occupancy": "75.17%",
+          "chemical_complete_fibers": "0 / 96 (0%)",
+          "implication": "需要 masked/inductive tensor，而非完整张量假设"
+        }
+      ],
+      "metric_definitions": [
+        {
+          "metric": "delta_skill_zero",
+          "definition": "1 - SSE(model) / SSE(delta=0)",
+          "interpretation": "相对无扰动响应基线的本地 normalized skill",
+          "direction": "越高越好"
+        },
+        {
+          "metric": "delta RMSE / MAE",
+          "definition": "在 truth-observed protein positions 上的误差",
+          "interpretation": "response 幅度误差",
+          "direction": "越低越好"
+        },
+        {
+          "metric": "Pooled delta PCC",
+          "definition": "展平所有 observed positions 后的相关",
+          "interpretation": "总体线性模式",
+          "direction": "越高越好"
+        },
+        {
+          "metric": "Condition PCC median",
+          "definition": "每个 condition 内跨 proteins 的 PCC 中位数",
+          "interpretation": "单 condition 蛋白模式",
+          "direction": "越高越好"
+        },
+        {
+          "metric": "Protein PCC / R²",
+          "definition": "每个 protein 跨 conditions 的泛化统计",
+          "interpretation": "protein-wise landscape",
+          "direction": "越高越好"
+        },
+        {
+          "metric": "Normalized AULC",
+          "definition": "按 budget 轴做梯形积分并除以预算跨度",
+          "interpretation": "主 sample-efficiency endpoint",
+          "direction": "越高越好"
+        },
+        {
+          "metric": "B80",
+          "definition": "达到 same-seed full reference 可实现增益 80% 的首个预算",
+          "interpretation": "不外推；未达到即 not_reached",
+          "direction": "越低越好"
+        },
+        {
+          "metric": "Evaluable counts",
+          "definition": "满足样本数与非零方差条件的 axes 数量",
+          "interpretation": "防止 NaN/常量轴掩盖",
+          "direction": "越多越好"
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "report_snapshot_sql",
+      "label": "GOAI-AL v2.2 reviewed report snapshot SQL",
+      "path": "reports/goai_al_v22_final/sources/goai_report.sql",
+      "query": {
+        "engine": "sqlite",
+        "language": "sql",
+        "description": "Executed bounded reporting snapshot transcribed from independently recomputed formal CSV/JSON aggregates; it contains only reviewed aggregate rows and no condition labels, predictions, or oracle responses.",
+        "executed_at": "2026-08-24T21:16:02Z",
+        "tables_used": [
+          "results/direct_multiseed_formal-20260824-v22/active_metrics.csv",
+          "results/direct_multiseed_formal-20260824-v22/per_seed_curve_summary.csv",
+          "results/direct_multiseed_formal-20260824-v22/paired_policy_comparisons.csv",
+          "results/direct_multiseed_formal-20260824-v22/full_reference_metrics.csv",
+          "results/direct_multiseed_formal-20260824-v22/representation_ablation_summary.csv",
+          "results/direct_multiseed_formal-20260824-v22/data_audit.json",
+          "results/direct_multiseed_formal-20260824-v22/control_vehicle_sensitivity.csv",
+          "results/direct_multiseed_formal-20260824-v22/low_rank_spectrum.csv",
+          "results/direct_multiseed_formal-20260824-v22/tensor_coverage.csv",
+          "results/pilot_v2_formal-20260824-v21/representation_metrics.csv",
+          "results/direct_multiseed_formal-20260824-v22/source_snapshot/FRAMEWORK_SPEC_V22.md"
+        ],
+        "filters": [
+          "formal seeds = 42,43,44,45,46",
+          "primary policy endpoint split = interpolation",
+          "primary metric = delta_skill_zero",
+          "registered checkpoints = 128,256,512,1024",
+          "representation contrast = combined semantics minus identity plus time",
+          "legacy pilot_v1 hit/impact outputs excluded"
+        ],
+        "metric_definitions": [
+          "normalized_aulc is the trapezoidal integral of delta_skill_zero over budget divided by budget span",
+          "paired policy difference is policy AULC minus same-seed Random AULC",
+          "sample_sd uses n-1 denominator across five seeds",
+          "paired 95% confidence intervals use two-sided t critical 2.776445 with df=4",
+          "B80 is the first budget reaching 80% of same-seed initial-to-full achievable improvement and is never extrapolated",
+          "combined semantics means identity plus continuous time plus frozen chemical and strain semantic blocks"
+        ]
+      }
+    },
+    {
+      "id": "framework_v22",
+      "label": "Frozen GOAI-AL v2.2 framework specification",
+      "path": "results/direct_multiseed_formal-20260824-v22/source_snapshot/FRAMEWORK_SPEC_V22.md",
+      "query": {
+        "engine": "file",
+        "language": "markdown",
+        "description": "Preregistered v2.2 query, control, representation, fairness, model, metric, artifact, and claim-boundary contract.",
+        "executed_at": "2026-08-24T20:44:44Z",
+        "tables_used": [
+          "results/direct_multiseed_formal-20260824-v22/source_snapshot/FRAMEWORK_SPEC_V22.md"
+        ]
+      }
+    },
+    {
+      "id": "formal_manifest",
+      "label": "GOAI-AL v2.2 formal root manifest",
+      "path": "results/direct_multiseed_formal-20260824-v22/manifest.json",
+      "query": {
+        "engine": "file",
+        "language": "json",
+        "description": "Hash-valid root manifest covering run identity, environment, config/source/spec snapshot, seeds, inventory, protocol, and resume history.",
+        "executed_at": "2026-08-24T20:52:30Z",
+        "tables_used": [
+          "results/direct_multiseed_formal-20260824-v22/manifest.json"
+        ]
+      }
+    },
+    {
+      "id": "data_audit",
+      "label": "GOAI condition/control/split audit",
+      "path": "results/direct_multiseed_formal-20260824-v22/data_audit.json",
+      "query": {
+        "engine": "file",
+        "language": "json",
+        "description": "Condition grain, overlap repair, pool/evaluation partitions, query replicates, controls, missingness, tensor, and response-spectrum audit.",
+        "executed_at": "2026-08-24T20:44:44Z",
+        "tables_used": [
+          "results/direct_multiseed_formal-20260824-v22/data_audit.json"
+        ]
+      }
+    },
+    {
+      "id": "control_audit",
+      "label": "Water–DMSO control sensitivity audit",
+      "path": "results/direct_multiseed_formal-20260824-v22/control_vehicle_sensitivity.csv",
+      "query": {
+        "engine": "file",
+        "language": "csv",
+        "description": "Post-hoc Water-versus-DMSO exact-context sensitivity; acquisition_input=false and training_input=false.",
+        "executed_at": "2026-08-24T20:44:44Z",
+        "tables_used": [
+          "results/direct_multiseed_formal-20260824-v22/control_vehicle_sensitivity.csv"
+        ]
+      }
+    },
+    {
+      "id": "formal_audit",
+      "label": "Independent artifact and statistical audit record",
+      "path": "reports/goai_al_v22_final/AUDIT_RECORD.md",
+      "query": {
+        "engine": "file",
+        "language": "markdown",
+        "description": "Independent rehash, exact-grid, pool-boundary, resume, AULC, confidence-interval, representation, and B80 recomputation record.",
+        "executed_at": "2026-08-24T21:16:02Z",
+        "tables_used": [
+          "reports/goai_al_v22_final/AUDIT_RECORD.md"
+        ]
+      }
+    },
+    {
+      "id": "v21_representation",
+      "label": "GOAI-AL v2.1 Direct versus rank-64 comparison",
+      "path": "results/pilot_v2_formal-20260824-v21/representation_metrics.csv",
+      "query": {
+        "engine": "file",
+        "language": "csv",
+        "description": "Single-seed same-nested-ID Direct and rank-64 feasibility comparison used to freeze the v2.2 Direct backbone.",
+        "executed_at": "2026-08-24T09:27:00Z",
+        "tables_used": [
+          "results/pilot_v2_formal-20260824-v21/representation_metrics.csv"
+        ],
+        "filters": [
+          "seed = 42",
+          "split = interpolation",
+          "budgets = 128,512,2670"
+        ]
+      }
+    }
+  ]
+}

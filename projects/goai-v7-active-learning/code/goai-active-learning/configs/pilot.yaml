@@ -1,0 +1,40 @@
+data:
+  metadata: /home/chenyuming/Project/go-ai/WAYB_WAYC_metadata_train_val.csv
+  proteome: /home/chenyuming/Project/go-ai/WAYB_WAYC_proteome_raw_train_val.csv
+  missing_rate_threshold: 0.80
+  interpolation_fraction: 0.20
+  cache_dir: ../results/cache_v2
+
+model:
+  kind: low_rank
+  response_rank: 64
+  svd_niter: 2
+  hidden_dim: 128
+  dropout: 0.10
+  learning_rate: 0.001
+  weight_decay: 0.0002
+  epochs: 80
+  batch_size: 512
+  target_scale_floor: 0.05
+  device: cuda
+
+protocol:
+  version: goai-condition-atomic-v2.1
+  seed: 42
+  strategies: [random, coreset, uncertainty]
+  target_fraction: 0.80
+  formal:
+    initial_budget: 128
+    acquisition_batch_size: 128
+    checkpoints: [128, 256, 512, 1024]
+    epochs: 80
+    mc_passes: 8
+  smoke:
+    initial_budget: 32
+    acquisition_batch_size: 32
+    checkpoints: [32, 64, 96]
+    epochs: 2
+    mc_passes: 2
+
+runtime:
+  output_dir: ../results/pilot_v2

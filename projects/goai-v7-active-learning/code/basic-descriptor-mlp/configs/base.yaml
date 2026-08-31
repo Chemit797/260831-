@@ -1,0 +1,27 @@
+data:
+  metadata_train_val: /home/chenyuming/Project/go-ai/WAYB_WAYC_metadata_train_val.csv
+  proteome_train_val: /home/chenyuming/Project/go-ai/WAYB_WAYC_proteome_raw_train_val.csv
+  metadata_test: /home/chenyuming/Project/go-ai/WAYB_WAYC_metadata_test.csv
+  chemical_embeddings: /home/chenyuming/Project/go-ai-rebuild/data/chemical_embeddings.csv
+  strain_embeddings: /home/chenyuming/Project/go-ai-rebuild/data/strain_embeddings.csv
+  missing_rate_threshold: 0.80
+  target_scale: log2
+  target_std_floor: 0.10
+
+model:
+  hidden_dim: 512
+  latent_dim: 256
+  dropout: 0.10
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  epochs: 100
+  batch_size: 128
+  seed: 42
+
+features:
+  normalize_descriptor_blocks: true
+  one_hot_fields: [Medium, pert_time, Temperature]
+
+runtime:
+  runs_dir: /home/chenyuming/Project/go-ai-rebuild/runs/basic_descriptor_mlp
+  num_workers: 0

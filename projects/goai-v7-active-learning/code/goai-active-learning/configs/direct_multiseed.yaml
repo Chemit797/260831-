@@ -1,0 +1,62 @@
+experiment_id: goai-al-direct-semantic-multiseed-v2.2
+data_protocol: goai-condition-atomic-v2.1
+model_id: GOAI-AL-V22-DIRECT-SEMANTIC-01
+split_seed: 42
+
+data:
+  metadata_path: /home/chenyuming/Project/go-ai/WAYB_WAYC_metadata_train_val.csv
+  proteome_path: /home/chenyuming/Project/go-ai/WAYB_WAYC_proteome_raw_train_val.csv
+  cache_dir: results/cache_v22
+  missing_rate_threshold: 0.80
+  interpolation_fraction: 0.20
+  control_policy: pooled_exact_context_water_dmso
+  vehicle_column: null
+
+evaluation:
+  target_fraction: 0.80
+
+semantic_assets:
+  chemical_embeddings_path: /home/chenyuming/Project/go-ai/data/processed/chemical_embeddings/chemberta_77m_mlm/chemberta_real.tsv
+  chemical_manifest_path: /home/chenyuming/Project/go-ai/data/processed/chemical_embeddings/chemberta_77m_mlm/manifest.json
+  strain_semantics_path: /home/chenyuming/Project/go-ai/data/processed/entities/strain_semantics_numeric.tsv
+  strain_manifest_path: /home/chenyuming/Project/go-ai/data/processed/entities/strain_semantics_manifest.json
+  chemical_risk_manifest_path: /home/chenyuming/Project/go-ai/data/processed/chemical_views/manifest.json
+
+features:
+  primary: semantic
+  ablations:
+    - identity
+    - semantic
+
+strategies:
+  - random
+  - coreset
+  - uncertainty
+
+model:
+  kind: direct
+  hidden_dim: 128
+  dropout: 0.10
+  learning_rate: 0.001
+  weight_decay: 0.0002
+  batch_size: 512
+  target_scale_floor: 0.05
+  device: cuda
+  response_rank: 64
+  svd_niter: 2
+
+profiles:
+  formal:
+    seeds: [42, 43, 44, 45, 46]
+    initial_budget: 128
+    acquisition_batch_size: 128
+    checkpoints: [128, 256, 512, 1024]
+    epochs: 80
+    mc_passes: 8
+  smoke:
+    seeds: [42, 43]
+    initial_budget: 32
+    acquisition_batch_size: 32
+    checkpoints: [32, 64, 96]
+    epochs: 2
+    mc_passes: 2

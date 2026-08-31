@@ -1,0 +1,213 @@
+# Binary artifact registry.  GitHub is the readable index; Drive holds the bytes.
+# Do not put credentials, auth.json, secrets, rclone.conf, SSH keys, or raw Codex
+# content in this repository.
+
+schema_version: 1
+snapshot_date_utc: "2026-08-31"
+artifact_root_on_restore: "~/Project"
+
+artifacts:
+  - id: goai-v7-active-data-20260831
+    status: verified
+    retention: ACTIVE_REQUIRED
+    project: goai-v7-active-learning
+    drive_path: "01_CURRENT_GOAI_V7/01_DATA/goai-v7-active-data-20260831.tar.zst"
+    sha256: "52ca05feecf7b1b42ea014bba2d3b0d56fae31f6213f557a3a775976cf845c88"
+    size_bytes: 160634968
+    extract_into: "~/Project"
+    source_paths:
+      - "go-ai/WAYB_WAYC_metadata_train_val.csv"
+      - "go-ai/WAYB_WAYC_proteome_raw_train_val.csv"
+      - "go-ai-rebuild/data/chemical_embeddings.csv"
+      - "go-ai-rebuild/data/strain_embeddings.csv"
+      - "go-ai/data/processed/chemical_embeddings/chemberta_77m_mlm/"
+      - "go-ai/data/processed/entities/"
+    purpose: "官方训练输入、V7 descriptor、AL 冻结语义资产。私有研究数据，不进 GitHub。"
+    restore_required: true
+
+  - id: goai-v7-three-seed-results-20260831
+    status: verified
+    retention: ACTIVE_REQUIRED
+    project: goai-v7-active-learning
+    drive_path: "01_CURRENT_GOAI_V7/02_BASELINES/goai-v7-three-seed-results-20260831.tar.zst"
+    sha256: "06a75d98a785a0fdf61b0936b855a9886e857cd06e12a6e885d6593036b3e2f4"
+    size_bytes: 957657260
+    extract_into: "~/Project"
+    source_paths:
+      - "go-ai-rebuild/runs/proteome_biostate_readout_v7_reproduction/"
+    purpose: "V7 seed 42/43/44 的 checkpoint、validation predictions、合同、指标、报告和图。"
+    restore_required: true
+
+  - id: goai-v7-basic-descriptor-comparator-20260831
+    status: staged
+    retention: ACTIVE_REQUIRED
+    project: goai-v7-active-learning
+    drive_path: "01_CURRENT_GOAI_V7/02_BASELINES/goai-v7-basic-descriptor-comparator-20260831.tar.zst"
+    sha256: "b382ecbc9d2415fff036bfc683ce084d94c41eef4b0a1dca6e2b254f72c1db1a"
+    size_bytes: 158870089
+    extract_into: "~/Project"
+    source_paths:
+      - "go-ai-rebuild/runs/basic_descriptor_mlp/{mean,zero,real}-seed*/"
+    purpose: "五模型比较所需 prediction/metric；特意排除非当前主线的 comparator checkpoint。"
+    restore_required: false
+
+  - id: goai-al-v22-formal-results-20260831
+    status: staged
+    retention: ACTIVE_REQUIRED
+    project: goai-v7-active-learning
+    drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-al-v22-formal-results-20260831.tar.zst"
+    sha256: "9cc6aeeb73cbf559182a960931e6b657248c1c69121f110d5e9d72e6ca314987"
+    size_bytes: 982224
+    extract_into: "~/Project"
+    source_paths:
+      - "active-learning/goai_active_learning/results/direct_multiseed_formal-20260824-v22/"
+    purpose: "GOAI-AL v2.2 正式五 seed 结果与审计。不是 V7 集成实验。"
+    restore_required: true
+
+  - id: goai-al-key-geometry-v4-20260831
+    status: staged
+    retention: ACTIVE_REQUIRED
+    project: goai-v7-active-learning
+    drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-al-key-geometry-v4-20260831.tar.zst"
+    sha256: "55cc589b815c440a4e348c0abe8a33ce470d8ad84e6c96cffbbee5d8d588e827"
+    size_bytes: 5407429
+    extract_into: "~/Project"
+    source_paths:
+      - "active-learning/goai_active_learning/results/key_geometry-20260825-v4/"
+    purpose: "AL key geometry 最终分析。"
+    restore_required: false
+
+  - id: goai-al-transfer-geometry-v1-20260831
+    status: staged
+    retention: ACTIVE_REQUIRED
+    project: goai-v7-active-learning
+    drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-al-transfer-geometry-v1-20260831.tar.zst"
+    sha256: "84266a8e043d19e109c1886d4ee4cce36ca52908c0765d066ce85a580df38725"
+    size_bytes: 509055
+    extract_into: "~/Project"
+    source_paths:
+      - "active-learning/goai_active_learning/results/transfer_geometry-20260825-v1/"
+    purpose: "AL transfer geometry 最终分析。"
+    restore_required: false
+
+  - id: goai-bcr-vs-v7-conclusion-evidence-20260831
+    status: staged
+    retention: PROMOTED_ARCHIVE
+    project: goai-v7-active-learning
+    drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-bcr-vs-v7-conclusion-evidence-20260831.tar.zst"
+    sha256: "9a16ce329ec40da68ef2cabffb4c4088aa9727a2472b4962f6cca9f8d249267b"
+    size_bytes: 2836720
+    extract_into: "~/Project"
+    source_paths:
+      - "go-ai-rebuild/runs/goai_semantic_bcr_v1/semantic-bcr-v1-seed42/ (reports/contract only)"
+      - "go-ai-rebuild/runs/goai_semantic_bcr_v1/released_validation_v7_comparison/ (reports/contract/diagnostics only)"
+    purpose: "已结束的 BCR 对比结论。刻意排除 checkpoints、NPZ、folds 与 OOF。"
+    restore_required: false
+
+  - id: goai-stage1-m12-promoted-20260831
+    status: staged
+    retention: PROMOTED_ARCHIVE
+    project: goai-stage1
+    drive_path: "02_ARCHIVE_GOAI_STAGE1/goai-stage1-m12-promoted-20260831.tar.zst"
+    sha256: "7f99bdb82fc9c672faedc50e28a4bbe4df39e86912094d50dbd9590b111131cd"
+    size_bytes: 187031677
+    extract_into: "~/Project"
+    source_paths:
+      - "GOAI_离线实验与M12资料包_20260816/"
+      - "go-ai/deliverables/GOAI-M12.0_submission_candidate_20260815.zip"
+      - "16 verified checkpoint files (M2/M6/M9/OP3)"
+    purpose: "第一阶段正式 M12 阅读包、提交和已验证权重。"
+    restore_required: false
+
+  - id: genedisco-source-and-il2-pilot-20260831
+    status: staged
+    retention: PROMOTED_ARCHIVE
+    project: genedisco
+    drive_path: "03_ARCHIVE_GENEDISCO/genedisco-source-and-il2-pilot-20260831.tar.zst"
+    sha256: "cf969bb04d3ccb902d8fdaef23d02dd049b306e292ffedc19a72c5a1df9cfb3e"
+    size_bytes: 41725772
+    extract_into: "~/Project"
+    source_paths:
+      - "active-learning/disco/DiscoBAX/ (excluding public data cache)"
+      - "/mnt/Omics_GPU/chenyuming/DiscoBAX/pilot_il2_3seed/"
+    purpose: "主动学习基线源码、论文、复现说明和 IL-2 三 seed pilot 证据。"
+    restore_required: false
+
+  - id: biohub-main-source-snapshot-20260831
+    status: staged
+    retention: PROMOTED_ARCHIVE
+    project: biohub
+    drive_path: "04_ARCHIVE_BIOHUB/biohub-main-source-snapshot-20260831.tar.zst"
+    sha256: "99b433b9c19af897f2144b0a7d909f273faaceddac586c05f21de7a2caf5997b"
+    size_bytes: 54957944
+    extract_into: "~/Project"
+    source_paths:
+      - "Biohub - Cell Tracking During Development/ (dirty main worktree)"
+    exclusions: [".git", ".venv", "data", ".agents", "cache", "*.env", "*.key", "*.token"]
+    purpose: "main worktree 的普通源码快照；不可与 Codex worktree 覆盖混合。"
+    restore_required: false
+
+  - id: biohub-main-git-history-20260831
+    status: staged
+    retention: PROMOTED_ARCHIVE
+    project: biohub
+    drive_path: "04_ARCHIVE_BIOHUB/biohub-main-git-history-20260831.bundle"
+    sha256: "71cfd6a68e2a78a574b35c53dec2ba37e7b1f47e4e3c57477d83e14670e1531a"
+    size_bytes: 5194548
+    source_paths: ["Biohub main Git refs at base c602111"]
+    purpose: "无远端仓库的完整 Git 基线；恢复 main snapshot 前先 clone bundle。"
+    restore_required: false
+
+  - id: biohub-codex-worktree-snapshot-20260831
+    status: staged
+    retention: PROMOTED_ARCHIVE
+    project: biohub
+    drive_path: "04_ARCHIVE_BIOHUB/biohub-codex-worktree-snapshot-20260831.tar.zst"
+    sha256: "ec5fa6cbe42225fdae2499360da96ff54071060528e70cf8db331720c11c0e20"
+    size_bytes: 6239160
+    extract_into: "~/Project"
+    source_paths:
+      - ".codex/worktrees/9a74/Biohub - Cell Tracking During Development/"
+    exclusions: [".git pointer", "configs/storage.env", ".venv", "data", "cache", "*.env", "*.key", "*.token"]
+    purpose: "独立 dirty Codex worktree；基线同为 c602111，但不能覆盖 main snapshot。"
+    restore_required: false
+
+  - id: biohub-promoted-artifacts-20260831
+    status: staged
+    retention: PROMOTED_ARCHIVE
+    project: biohub
+    drive_path: "04_ARCHIVE_BIOHUB/biohub-promoted-artifacts-20260831.tar.zst"
+    sha256: "45a58aaca68bcc85c016652b9df172f338db8d8a139a5a2d409143fd9fcec8b7"
+    size_bytes: 47873777
+    extract_into: "~/Project"
+    source_paths:
+      - "E002 b1 15ep model directory"
+      - "11 selected R001 model/receipt/metric files"
+      - "two accepted and two non-submitted candidate evidence sets"
+    purpose: "精选 Biohub 模型、提交 CSV、门控/提交/超时证据；不将候选误称为已接受提交。"
+    restore_required: false
+
+  - id: codex-recovery-and-full-history-20260831
+    status: pending_user_encryption
+    retention: SENSITIVE_PRIVATE
+    project: codex
+    drive_path: "90_CODEX_PRIVATE_COLD_BACKUP/"
+    expected_input_bytes: 7589249024
+    purpose: "去凭据 Codex recovery/live-context/provider-history 三包；最终 SQLite 快照需在 Codex 静默后生成。"
+    exclusions:
+      - "auth.json"
+      - "secrets/**"
+      - "config.toml* and official.config.toml"
+      - "provider backup config.toml"
+      - "cache/.tmp/tmp/ipc/daemon/control/locks/models cache/version/install IDs"
+    restore_required: false
+
+excluded_or_metadata_only:
+  - path: "go-ai-rebuild/experiments/*/.conda-env and .venv"
+    reason: "REBUILDABLE environment; known token-containing environment files must not be copied."
+  - path: "go-ai-rebuild/runs/goai_semantic_bcr_v1/semantic-bcr-v1-seed42/folds and oof"
+    reason: "BCR concluded; 1.27 GB internal OOF not independently reproducible and is not current work."
+  - path: "active-learning/goai_active_learning/results/cache_v2 and cache_v22"
+    reason: "REBUILDABLE cache."
+  - path: "go-ai/runs and Biohub fallback raw data/durable bulk"
+    reason: "Historical or redownloadable data; retain source/ledger/selected promoted evidence only."

@@ -1,0 +1,26 @@
+{
+  "name": "pilot_il2_smoke",
+  "datasets": ["schmidt_2021_il2"],
+  "methods": ["discobax"],
+  "seeds": [1000],
+  "common": {
+    "feature_set_name": "achilles",
+    "model_name": "bayesian_mlp",
+    "acquisition_batch_size": 32,
+    "num_active_learning_cycles": 1,
+    "topk_percent": 0.01,
+    "num_topk_clusters": 20,
+    "bax_topk_kvalue": 2,
+    "bax_level_set_c": 1.5,
+    "bax_subset_select_subset_size": 10,
+    "bax_noise_type": "additive",
+    "bax_noise_lengthscale": 1.0,
+    "bax_noise_outputscale": 1.0,
+    "bax_num_samples_EIG": 20,
+    "bax_num_samples_entropy": 20,
+    "bax_entropy_average_mode": "arithmetic",
+    "bax_batch_selection_mode": "topk_EIG",
+    "bax_subset_select_num_samples": 20,
+    "device": "cuda"
+  }
+}

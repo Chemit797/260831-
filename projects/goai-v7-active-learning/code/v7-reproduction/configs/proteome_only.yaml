@@ -1,0 +1,53 @@
+data:
+  metadata_train_val: /home/chenyuming/Project/go-ai/WAYB_WAYC_metadata_train_val.csv
+  proteome_train_val: /home/chenyuming/Project/go-ai/WAYB_WAYC_proteome_raw_train_val.csv
+  chemical_embeddings: /home/chenyuming/Project/go-ai-rebuild/data/chemical_embeddings.csv
+  strain_embeddings: /home/chenyuming/Project/go-ai-rebuild/data/strain_embeddings.csv
+  missing_rate_threshold: 0.80
+  target_scale: log2
+  target_std_floor: 0.10
+
+features:
+  normalize_descriptor_blocks: true
+  one_hot_fields: [Medium, pert_time, Temperature]
+  chemical_route_only: true
+  instrument_field: instrument
+  plate_field: Yeast_cell_plate
+
+model:
+  hidden_dim: 2048
+  posterior_hidden_dim: 2048
+  decoder_hidden_dim: 2048
+  latent_dim: 512
+  side_embedding_dim: 32
+  encoder_dropout: 0.10
+  decoder_dropout: 0.10
+  norm: batchnorm
+
+training:
+  epochs: 100
+  batch_size: 128
+  learning_rate: 0.0001
+  min_learning_rate: 0.000001
+  warmup_initial_learning_rate: 0.000001
+  warmup_steps: 500
+  weight_decay: 0.00001
+  gradient_clip: 1.0
+  temperature: 0.07
+  lambda_recon_q: 1.0
+  lambda_predict_c: 1.0
+  lambda_mask: 0.1
+  lambda_kl: 0.01
+  lambda_nce: 0.1
+  lambda_bio_posterior_nce: 0.05
+  lambda_adv_instrument: 0.05
+  adversary_grl_scale: 1.0
+  sample_posterior: true
+  detach_mask_latent: true
+  mask_pos_weight: true
+  amp: true
+
+runtime:
+  runs_dir: /home/chenyuming/Project/go-ai-rebuild/runs/proteome_biostate_readout_v7_reproduction
+  num_workers: 0
+

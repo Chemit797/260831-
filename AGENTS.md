@@ -7,9 +7,11 @@ This repository is the durable knowledge and recovery index for research previou
 Before inspecting code, downloading artifacts, or proposing research work, read:
 
 1. `00_请先读我_服务器迁移总蓝图.md`
-2. `docs/06_Codex_完整归档与恢复指南.md`
-3. Any existing `projects/goai-v7-active-learning/CURRENT_STATE.md` and `NEXT_STEPS.md`
-4. The relevant artifact/dataset manifest before requesting binary files.
+2. `MIGRATION_STATUS.md`
+3. `docs/01_研究总览.md`
+4. `projects/goai-v7-active-learning/CURRENT_STATE.md` and `NEXT_STEPS.md`
+5. `docs/06_Codex_完整归档与恢复指南.md` only when Codex recovery/history matters.
+6. The relevant artifact/dataset manifest before requesting binary files.
 
 ## Current research priority
 

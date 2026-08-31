@@ -1,0 +1,53 @@
+{
+  "delivery_mode": "portable_html",
+  "generated_at": "2026-08-24T21:16:02Z",
+  "primary_artifact": "report.html",
+  "canonical_input": "artifact.json",
+  "builder": "data-analytics build-report deliver_portable_artifact.mjs",
+  "stages": {
+    "validation": "passed",
+    "package": "passed",
+    "verification": "structural_only"
+  },
+  "browser_warning": {
+    "code": "browser_unavailable",
+    "message": "No installed Chromium headless-shell executable was found; the packager did not download or install a browser. Exact embedded-payload equality, runtime roots, semantic fallbacks, charts-as-data, and structural checks passed. Enhanced-reader desktop/narrow visual and source-dialog interaction QA did not run."
+  },
+  "counts": {
+    "blocks": 38,
+    "charts": 3,
+    "html": 0,
+    "metrics": 5,
+    "tables": 11
+  },
+  "source_dialog": "not_verified",
+  "source_interaction": "not_verified",
+  "files": {
+    "artifact.json": {
+      "bytes": 70133,
+      "sha256": "45914c7ea054ee312be6619da354ffd084d7b317b59a119dd21366904f3258a7"
+    },
+    "report.html": {
+      "bytes": 636395,
+      "sha256": "08659f859f71281a78b8caafe88c4284de8208951add26734c50c22a60aeec98"
+    },
+    "build_artifact.mjs": {
+      "sha256": "54233ae36dd711504984d4b53f1ab57a1d862dee2464b8dbd2d41fd8438f8ad2"
+    },
+    "sources/goai_report.sql": {
+      "sha256": "ef28dbe4508694650d529081e9025ba66dc9ef3bc9bf941493628eff9b0a8509"
+    },
+    "SOURCE_NOTES.md": {
+      "sha256": "73454a826a72c01990c4866d5e3804c276ed225342abbc7c9238fc27427c7a7f"
+    },
+    "AUDIT_RECORD.md": {
+      "sha256": "2b5dfbdbc64e05f01c6b693189a6a4eb457443dbff946a6b34472abb10f6eba3"
+    }
+  },
+  "timings_ms": {
+    "validate_and_package": 164.8,
+    "static_chart_extraction": 5.2,
+    "structural_verification": 14.7,
+    "total": 181.6
+  }
+}
