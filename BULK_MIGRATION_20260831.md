@@ -19,10 +19,10 @@
 | `03_Omics_GPU_历史资料/01_chenyuming_go-ai-nightly/` | `/mnt/Omics_GPU/chenyuming/go-ai` | 30.79 GiB | **正在直接上传** | GO-AI 夜间运行、模型、结果的历史回溯层 |
 | `03_Omics_GPU_历史资料/02_DiscoBAX-pilot_il2_3seed_archive/bulk-discobax-pilot_il2_3seed-full-20260831.tar.zst` | GeneDisco 外部软链接目标 `DiscoBAX/pilot_il2_3seed` | 114 MiB 源，压缩后约 35.7 MiB | **已验证**：archive 上传后 `rclone check` 报 `0 differences`（1 matching file） | IL-2 pilot 的完整日志/结果快照；不是公开 GeneDisco 数据缓存 |
 | `03_Omics_GPU_历史资料/03_goai-rna-transfer-external/` | RNA transfer 外部输入 | 836 MiB | **已验证**：`rclone check --checksum` 报 `0 differences`（5 matching files） | M9.6/RNA 历史输入与 OOF 回溯 |
-| `04_VirtualCODEX_完整研究档案/` | 用户个人 VirtualCODEX 根（排除 `mousebrain/`） | 约 206.19 GiB | **正在低并发直接上传** | 用户个人的完整网络盘历史；恢复时按相对路径按需取用 |
+| `04_VirtualCODEX_完整研究档案/` | 用户个人 VirtualCODEX 根（排除 `mousebrain/`） | 约 206.19 GiB | **已写入首批约 6.3 GiB；当前可续传暂停** | 用户个人的完整网络盘历史；恢复时按相对路径按需取用 |
 | `04_VirtualCODEX_完整研究档案/CYM_DD/FAXP2.0Pro_two_stage_20260831/` | 原先活跃的 FAX 训练目录；已包含在上一行 206.19 GiB 内 | 1.158 GiB / 103 files | **已验证**：训练进程结束后，`rclone check --checksum` 报 `0 differences`（103 matching files） | 可直接恢复的 FAX 终态快照 |
 
-表中的 FAX 行是 VirtualCODEX 的子集，**不能再与 206.19 GiB 相加**。在 Project 与 Omics GO-AI 两条高优先级链路稳定后，剩余全树已恢复为低并发上传，以尽量利用清理前的窗口；它始终使用同一套排除规则，绝不另起无过滤的全盘 copy。
+表中的 FAX 行是 VirtualCODEX 的子集，**不能再与 206.19 GiB 相加**。剩余全树曾恢复为低并发上传并已写入首批约 6.3 GiB；实测它会明显挤占 Project 与 Omics GO-AI 两条高优先级链路，因此当前以可续传方式暂停，待任一主链路完成后立即恢复。它始终使用同一套排除规则，绝不另起无过滤的全盘 copy。
 
 早期一次聚焦 FAX copy 曾把同一来源的一份**重复、非规范副本**散落在 Drive 的 `04_VirtualCODEX_完整研究档案/CYM_DD/` 父层（而不是其 `FAXP2.0Pro_two_stage_20260831/` 子目录）。该重复副本先保留以避免在紧急期做远端删除；未来恢复和验收只认上表的嵌套 canonical 路径，父层散件不可当作独立项目。
 
