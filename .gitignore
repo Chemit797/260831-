@@ -1,0 +1,36 @@
+# Credentials and local authentication
+auth.json
+secrets/
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.token
+rclone.conf
+.rclone.conf
+
+# Large local recovery archives and artifacts
+artifacts/
+archives/
+downloads/
+data/
+runs/
+models/
+oof/
+*.tar
+*.tar.zst
+*.tar.gz
+*.zip
+*.7z
+
+# Rebuildable environments and caches
+.venv/
+.conda-env/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.cache/
+*.pyc
