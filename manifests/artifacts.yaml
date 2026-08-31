@@ -39,7 +39,7 @@ artifacts:
     restore_required: true
 
   - id: goai-v7-basic-descriptor-comparator-20260831
-    status: staged
+    status: verified
     retention: ACTIVE_REQUIRED
     project: goai-v7-active-learning
     drive_path: "01_CURRENT_GOAI_V7/02_BASELINES/goai-v7-basic-descriptor-comparator-20260831.tar.zst"
@@ -52,7 +52,7 @@ artifacts:
     restore_required: false
 
   - id: goai-al-v22-formal-results-20260831
-    status: staged
+    status: verified
     retention: ACTIVE_REQUIRED
     project: goai-v7-active-learning
     drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-al-v22-formal-results-20260831.tar.zst"
@@ -65,7 +65,7 @@ artifacts:
     restore_required: true
 
   - id: goai-al-key-geometry-v4-20260831
-    status: staged
+    status: verified
     retention: ACTIVE_REQUIRED
     project: goai-v7-active-learning
     drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-al-key-geometry-v4-20260831.tar.zst"
@@ -78,7 +78,7 @@ artifacts:
     restore_required: false
 
   - id: goai-al-transfer-geometry-v1-20260831
-    status: staged
+    status: verified
     retention: ACTIVE_REQUIRED
     project: goai-v7-active-learning
     drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-al-transfer-geometry-v1-20260831.tar.zst"
@@ -91,7 +91,7 @@ artifacts:
     restore_required: false
 
   - id: goai-bcr-vs-v7-conclusion-evidence-20260831
-    status: staged
+    status: verified
     retention: PROMOTED_ARCHIVE
     project: goai-v7-active-learning
     drive_path: "01_CURRENT_GOAI_V7/03_PROMOTED_RESULTS/goai-bcr-vs-v7-conclusion-evidence-20260831.tar.zst"
@@ -105,7 +105,7 @@ artifacts:
     restore_required: false
 
   - id: goai-stage1-m12-promoted-20260831
-    status: staged
+    status: verified
     retention: PROMOTED_ARCHIVE
     project: goai-stage1
     drive_path: "02_ARCHIVE_GOAI_STAGE1/goai-stage1-m12-promoted-20260831.tar.zst"
@@ -120,7 +120,7 @@ artifacts:
     restore_required: false
 
   - id: genedisco-source-and-il2-pilot-20260831
-    status: staged
+    status: verified
     retention: PROMOTED_ARCHIVE
     project: genedisco
     drive_path: "03_ARCHIVE_GENEDISCO/genedisco-source-and-il2-pilot-20260831.tar.zst"
@@ -134,7 +134,7 @@ artifacts:
     restore_required: false
 
   - id: biohub-main-source-snapshot-20260831
-    status: staged
+    status: verified
     retention: PROMOTED_ARCHIVE
     project: biohub
     drive_path: "04_ARCHIVE_BIOHUB/biohub-main-source-snapshot-20260831.tar.zst"
@@ -148,7 +148,7 @@ artifacts:
     restore_required: false
 
   - id: biohub-main-git-history-20260831
-    status: staged
+    status: verified
     retention: PROMOTED_ARCHIVE
     project: biohub
     drive_path: "04_ARCHIVE_BIOHUB/biohub-main-git-history-20260831.bundle"
@@ -159,7 +159,7 @@ artifacts:
     restore_required: false
 
   - id: biohub-codex-worktree-snapshot-20260831
-    status: staged
+    status: verified
     retention: PROMOTED_ARCHIVE
     project: biohub
     drive_path: "04_ARCHIVE_BIOHUB/biohub-codex-worktree-snapshot-20260831.tar.zst"
@@ -173,7 +173,7 @@ artifacts:
     restore_required: false
 
   - id: biohub-promoted-artifacts-20260831
-    status: staged
+    status: verified
     retention: PROMOTED_ARCHIVE
     project: biohub
     drive_path: "04_ARCHIVE_BIOHUB/biohub-promoted-artifacts-20260831.tar.zst"
