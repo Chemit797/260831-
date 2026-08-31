@@ -7,3 +7,5 @@
 * M2/M6/M9/OP3 的 16 个 checkpoint：与离线资料包内 manifest 交叉校验。
 
 已拒绝的 M10 transfer、RNA transfer 的大 OOF 和 batch-audit NPZ 不在该包中。它们的项目存在、结论和原服务器来源已在根 manifest/蓝图中记录；只有重开历史审计时才应单独取回。
+
+如需阅读关闭支线的源码和小型预训练工件，下载 `goai-stage1-ancillary-sources-20260831`；它特意排除了 7.7 GB M10 models/OOF、RNA OOF、重复的 OP3 encoder 和 batch-audit NPZ。

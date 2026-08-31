@@ -133,6 +133,21 @@ artifacts:
     purpose: "主动学习基线源码、论文、复现说明和 IL-2 三 seed pilot 证据。"
     restore_required: false
 
+  - id: goai-stage1-ancillary-sources-20260831
+    status: verified
+    retention: PROMOTED_ARCHIVE
+    project: goai-stage1
+    drive_path: "02_ARCHIVE_GOAI_STAGE1/goai-stage1-ancillary-sources-20260831.tar.zst"
+    sha256: "b6344b7b02689bdd5e53566802958f19063fdab7f9b0ade93c2e408f667db8df"
+    size_bytes: 11176353
+    extract_into: "~/Project"
+    source_paths:
+      - "goai-kaggle-model-transfer source/results, excluding models/OOF"
+      - "goai-rna-transfer source and small pretraining artifacts, excluding OOF and duplicate OP3 encoder"
+      - "goai_batch_audit_seed42_complete analysis/manual/contract/checksums, excluding runs/NPZ"
+    purpose: "已关闭 GO-AI 支线的可读源码和结论；保留理解路径，不搬大型 OOF/NPZ。"
+    restore_required: false
+
   - id: biohub-main-source-snapshot-20260831
     status: verified
     retention: PROMOTED_ARCHIVE
