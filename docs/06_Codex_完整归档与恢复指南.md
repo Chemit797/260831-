@@ -5,7 +5,7 @@
 > 1. 在新机器上让新的 Codex/智能体立即理解当前研究并继续工作；
 > 2. 在需要时完整回看旧服务器上的 Codex 历史、附件、会话和工作状态。
 
-本指南把“新智能体理解研究”与“保留旧 Codex 全部历史”明确分开。前者依赖版本控制文档；后者依赖加密档案。两者都保留，但不互相混淆。
+本指南把“新智能体理解研究”与“保留旧 Codex 全部历史”明确分开。前者依赖版本控制文档；后者依赖私有 Drive 档案。两者都保留，但不互相混淆。
 
 ## 1. 两种恢复，不是一种
 
@@ -14,7 +14,7 @@
 | 研究连续性 | GitHub 文档、代码、数据/制品 manifest、当前 V7 文件 | 新机器、新智能体、日常工作 | 否 |
 | Codex 工作方式恢复 | 去密配置、rules、自定义 skills、关键状态数据库 | 新装 Codex 后恢复工作习惯 | 否，约 25 MB 即可 |
 | 历史会话回看 | sessions、thread history、attachments、migration backups | 查旧结论、找旧附件、人工取证 | 是 |
-| 完整灾难恢复 | 上述全部的加密快照 | 旧服务器彻底不可访问 | 是 |
+| 完整灾难恢复 | 上述全部的已校验私有预快照 | 旧服务器彻底不可访问 | 是 |
 
 因此，未来智能体不会被迫从数 GB JSONL 聊天记录中猜研究目标；它会先按仓库的 `AGENTS.md` 读结构化知识。完整历史只在需要回溯时打开。
 
@@ -26,15 +26,15 @@ OpenAI 官方文档说明，Codex 会在开始工作前发现并读取适用的 
 
 | 部分 | 当前大小 | 作用 | 迁移级别 |
 |---|---:|---|---|
-| `sessions/` | 约 3.23 GB，539 个 JSONL | 原始会话记录 | 完整加密冷备 |
-| provider migration backups | 约 2.01 GB | 迁移过程中的会话/状态备份 | 完整加密冷备 |
+| `sessions/` | 约 3.23 GB，539 个 JSONL | 原始会话记录 | private live-context 冷备 |
+| provider migration backups | 约 2.01 GB | 迁移过程中的会话/状态备份 | private provider-history 冷备 |
 | `logs/` | 约 1.07 GB | 运行日志 | 不必恢复；可按需留原始档案 |
 | `attachments/` | 约 497 MB | 用户上传的 CSV、ZIP、图等 | 筛选后归档，原件进入完整冷备 |
-| thread history | 约 291 MB | 本地会话索引/历史 | 加密恢复包或完整冷备 |
+| thread history | 约 291 MB | 本地会话索引/历史 | private live-context 冷备 |
 | `worktrees/` | 约 21 MB | Codex 创建的工作树 | 代码优先导出；不可只当缓存 |
 | `visualizations/` | 约 19 MB | 对话中生成的可视化 | 按研究价值筛选 |
-| config/rules/skills | 约 2.6 MB | 个人/项目工作方式 | 去密版本进 GitHub；原件加密保存 |
-| goals/state/memories/queue 等数据库 | 约 18.6 MB | 本地状态、目标、记忆、队列 | 加密关键恢复包 |
+| config/rules/skills | 约 2.6 MB | 个人/项目工作方式 | rules/skills 进 recovery-kit；所有 config 原件永久排除 |
+| goals/state/memories/queue 等数据库 | 约 18.6 MB | 本地状态、目标、记忆、队列 | recovery-kit 中的一致性备份 |
 | `auth.json` 与 `secrets/` | 很小但极敏感 | 登录和密钥 | 不上传；新机器重新登录 |
 
 最小的关键工作状态总计约 **21–25 MB**。它只用于恢复 Codex 的本地状态，不能取代研究文档。
@@ -47,18 +47,19 @@ OpenAI 官方文档说明，Codex 会在开始工作前发现并读取适用的 
 2. 不能仅依靠完整 `.codex` 档案来保存它；
 3. 在任何清理或删除前，必须验证主 Biohub 仓库已经拥有这些改动。
 
-## 3. 最终保留的四个 Codex 包
+## 3. 已完成的三包 Codex 预快照
 
-Google Drive 中建立 `90_CODEX_ENCRYPTED_COLD_BACKUP/`，但以下包均使用客户端加密；加密密码/私钥不放在 GitHub 或普通 Drive 文档中。
+2026-08-31 的紧急迁移已经把三份去凭据 `.tar.zst` 档案写入 `90_CODEX_PRIVATE_COLD_BACKUP/`，并在上传后逐包执行 `rclone check --one-way --checksum`，均返回 `0 differences found`。它们按用户在紧急迁移时的明确授权直接存储在用户管理的私有 Drive；认证材料仍被永久排除。
 
-| 包名（逻辑名称） | 内容 | 目标大小 | 恢复用途 |
-|---|---|---:|---|
-| `codex-research-context` | 会话摘要、研究决策、关键附件索引、可读说明 | 0.1–0.5 GB | 给人和新智能体理解历史 |
-| `codex-core-recovery` | 原始配置、rules、skills、goals/state/memories/queue 数据库及 WAL/SHM | 约 25 MB | 恢复关键本地状态 |
-| `codex-selected-evidence` | 选中的 PDF、图、CSV、ZIP、可视化和会话导出 | 0–0.5 GB | 保留不能被结构化文档代替的证据 |
-| `codex-full-history` | 除凭据外的整个 `.codex` 历史快照 | 源目录约 7.3 GB | 灾难恢复与完整回溯 |
+| Drive 相对路径 | 内容 | 实际大小 | SHA-256 前缀 | 恢复用途 |
+|---|---|---:|---|---|
+| `01_recovery-kit/codex-recovery-kit-preliminary-20260831.tar.zst` | rules、skills、worktree、visualizations、索引与 goals/state/memories/queue 的一致性 SQLite 备份 | 27,111,697 B | `67c2a86…` | 恢复 Codex 工作方式 |
+| `02_live-context/codex-live-context-preliminary-20260831.tar.zst` | sessions、attachments、archived sessions、日志与 thread history 的一致性 SQLite 备份 | 1,865,558,550 B | `f780115…` | 查当前会话、附件和上下文 |
+| `03_provider-history/codex-provider-history-preliminary-20260831.tar.zst` | provider migration backup 的 sessions/archived sessions | 840,029,107 B | `90fcfe3…` | 查更早 provider 历史 |
 
-默认迁移包含这四类。因此完整迁移总量以 **12.6–13.5 GiB** 规划，而不是只按 5–6 GiB 的运行核心规划。
+三包合计 **2,732,699,354 B（2.545 GiB）**；加上 14 个研究包，实际已验证迁移量为 **4.073 GiB**。完整哈希、用途和排除项以 `manifests/artifacts.yaml` 为准，并有 [`MIGRATION_RECEIPT_20260831.md`](../MIGRATION_RECEIPT_20260831.md) 作为人类可读收据。
+
+“预快照”表示捕获时 Codex 仍在运行。核心 SQLite 使用 `.backup` 取得一致副本，目录先复制到 staging 再压缩，因此足以承担紧急恢复；若服务器仍可用，关闭/静默 Codex 后再做一个小的最终 delta 是可选增强。
 
 ## 4. 每个内容放到哪里
 
@@ -82,18 +83,17 @@ rules/（去密后的必要规则）
 
 GitHub 中不出现任何 access token、refresh token、client secret、SSH 私钥、`auth.json`、`secrets/` 或实际 rclone 配置。
 
-### 4.2 Google Drive：加密大文件与可回溯材料
+### 4.2 Google Drive：私有大文件与可回溯材料
 
 ```text
-90_CODEX_ENCRYPTED_COLD_BACKUP/
-├── 01_core_recovery/
-├── 02_selected_evidence/
-├── 03_full_history/
-├── 04_worktree_patches/
-└── 99_checksums_and_restore_notes/
+90_CODEX_PRIVATE_COLD_BACKUP/
+├── 01_recovery-kit/
+├── 02_live-context/
+├── 03_provider-history/
+└── 99_checksums-and-restore-notes/
 ```
 
-每个文件都必须在 `manifests/artifacts.yaml` 有对应记录：逻辑 ID、原路径、用途、大小、SHA-256、加密方式、Drive 文件 ID、恢复优先级和最后验证时间。
+每个文件都必须在 `manifests/artifacts.yaml` 有对应记录：逻辑 ID、来源范围、用途、大小、SHA-256、存储方式、Drive 相对路径、恢复优先级和最后验证时间。
 
 ### 4.3 不上传的认证材料
 
@@ -131,13 +131,13 @@ GitHub 中不出现任何 access token、refresh token、client secret、SSH 私
 
 读者应该从索引进入原始会话，而不是按日期盲目翻阅。
 
-### 第三步：仅在需要时解密原始历史
+### 第三步：仅在需要时解包原始历史
 
 例如，当需要确认“某个 M12 权重为何被保留”“某个 Biohub kernel 的最后修改来自哪里”时：
 
 1. 先从索引找到会话 ID 或附件路径；
-2. 下载并验证对应加密包的 SHA-256；
-3. 解密到一个单独的只读恢复目录；
+2. 下载并验证对应包的 SHA-256；
+3. 解压到一个单独的只读恢复目录；
 4. 查看需要的 JSONL、附件或 worktree patch；
 5. 将确认后的结论写回 `DECISIONS.md` 或 ledger，避免下一次再次翻原始档案。
 
@@ -154,7 +154,7 @@ flowchart TD
     G --> H["验证 SHA-256"]
     H --> F
     I["需要旧聊天证据？"] -. 少数情况 .-> J["查询 Codex 会话索引"]
-    J --> K["解密最小必要档案"]
+    J --> K["解包最小必要档案"]
     K --> F
 ```
 
@@ -177,16 +177,16 @@ flowchart TD
 ### B. 恢复个人 Codex 工作状态
 
 1. 关闭本机所有 Codex 进程；
-2. 下载、校验并解密 `codex-core-recovery`；
-3. 将去密配置和必要数据库恢复到新机器对应位置；
+2. 下载、校验并在独立目录解包 `codex-recovery-kit-preliminary-20260831.tar.zst`；
+3. 只按需将 rules、skills 或必要数据库复制到新机器对应位置；
 4. 不恢复 `auth.json` 和 `secrets/`，而是重新登录；
 5. 启动 Codex，确认配置、rules、项目 `AGENTS.md` 和本地状态可读；
 6. 运行 `context_doctor.sh`，以仓库文档纠正任何旧状态偏差。
 
 ### C. 完整历史/灾难恢复
 
-1. 不覆盖新机器已有 `.codex`；先解密到独立目录；
-2. 使用 checksums 校验完整 history 包；
+1. 不覆盖新机器已有 `.codex`；先解包到独立目录；
+2. 使用 checksums 校验所需 history 包；
 3. 先检索会话索引，再查看原始 JSONL/附件；
 4. 只有在确有需要时才手工合并部分状态；
 5. 原始档案始终保持只读副本。
@@ -198,18 +198,18 @@ flowchart TD
 1. **初始快照**：服务器仍在使用时复制，可尽早发现空间、权限和上传问题。
 2. **最终增量快照**：停止正在写入的实验并正常退出 Codex 后执行；对 SQLite 数据库必须同时保留主文件以及可能存在的 WAL/SHM 文件。
 
-每一包都生成：
+本次紧急预快照已生成：
 
 ```text
-<logical-name>.tar.zst.age
-<logical-name>.sha256
-<logical-name>.manifest.yaml
-<logical-name>.restore.md
+<logical-name>.tar.zst
+manifests/checksums-20260831.sha256
+manifests/artifacts.yaml
+MIGRATION_RECEIPT_20260831.md
 ```
 
-加密前和上传后都校验 SHA-256；Drive 文件 ID 写入 GitHub manifest。最终还要在另一目录或另一台机器上做一次恢复演练。
+本地 SHA-256 已记录，上传后也完成 rclone checksum 一致性检查；在另一目录或另一台机器上做一次解包恢复演练仍然是最好的后续验证。
 
-控制仓库提供 `scripts/create_codex_encrypted_snapshot.sh`：它只接受 `age1...` 公钥、强制生成客户端加密的 `.age` 包，并明确排除认证和 config；它还使用 SQLite `.backup` 处理核心状态。运行前仍应让 Codex 静默，运行后将 `.age` 与 `.sha256` 上传到 `90_CODEX_PRIVATE_COLD_BACKUP/`，私钥只由用户个人保存。
+控制仓库仍提供 `scripts/create_codex_encrypted_snapshot.sh`，用于未来希望以 `age1...` 公钥制作加密最终 delta 的情形。它明确排除认证和 config，并使用 SQLite `.backup` 处理核心状态；但这不是本次已完成的紧急预快照的依赖。
 
 ## 9. 什么会被主动排除
 
@@ -218,7 +218,7 @@ flowchart TD
 | `auth.json`、`secrets/` | 凭据不可安全上传 | 新机器重新登录；个人离线保管 |
 | cache、tmp、IPC、shell snapshots | 可重建，且不解释研究 | 不保留 |
 | 插件缓存/系统技能副本 | 可重新安装 | 仅保留自定义 skills 与版本说明 |
-| logs | 对恢复研究无必要 | 仅在完整历史档案中按需保留 |
+| logs | 不影响恢复研究主线 | 已作为 live-context 的回溯资料保存，不作为新智能体默认输入 |
 | 不相关会话 | 不帮助理解主线 | 会话索引只保留相关条目 |
 
 ## 10. 验收标准
@@ -227,8 +227,8 @@ flowchart TD
 
 - GitHub 仓库可让陌生读者在两小时内理解研究路线和当前目标；
 - 新智能体可在不打开历史 session 的情况下说清当前 V7 的状态与下一步；
-- Drive 中每个制品均有 manifest、大小和 SHA-256；
-- `codex-core-recovery` 能恢复关键本地状态；
-- `codex-full-history` 能独立解密和检索；
+- Drive 中每个制品均有 manifest、大小和 SHA-256，并完成上传后的 checksum 一致性检查；
+- `codex-recovery-kit-preliminary-20260831.tar.zst` 能恢复关键本地状态；
+- 三份 Codex 档案能独立校验、解包和检索；
 - Biohub worktree 改动已经变成普通源码提交或可验证 patch；
 - 不含 token、私钥、`auth.json`、`secrets/` 的内容被上传到 GitHub 或普通 Drive 路径。

@@ -8,6 +8,7 @@
 | 2026-08-31 | 配置 Google Drive 上传通道 | 已完成；指定根目录可创建并列出目录 | 上传前为每个制品生成清单与 SHA-256 |
 | 2026-08-31 | 建立 `00_迁移控制与清单/` | 已完成 | 上传知识快照和最终 manifests |
 | 2026-08-31 | 制备并上传 14 个精选研究包 | 已完成；共 1,641,096,976 B（1.528 GiB），每项完成 rclone checksum 一致性检查 | 上传 manifest snapshot；准备 Codex 私有冷备 |
+| 2026-08-31 | 上传 Codex 去凭据预快照 | 已完成；recovery-kit、live-context、provider-history 共 2,732,699,354 B（2.545 GiB），每项 rclone checksum 一致 | 如时间允许，在 Codex 静默后增加最终 delta；不删除原件 |
 
 ## 规则
 

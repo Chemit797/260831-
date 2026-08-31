@@ -202,19 +202,59 @@ artifacts:
     purpose: "精选 Biohub 模型、提交 CSV、门控/提交/超时证据；不将候选误称为已接受提交。"
     restore_required: false
 
-  - id: codex-recovery-and-full-history-20260831
-    status: pending_user_encryption
+  - id: codex-recovery-kit-preliminary-20260831
+    status: verified
     retention: SENSITIVE_PRIVATE
     project: codex
-    drive_path: "90_CODEX_PRIVATE_COLD_BACKUP/"
-    expected_input_bytes: 7589249024
-    purpose: "去凭据 Codex recovery/live-context/provider-history 三包；最终 SQLite 快照需在 Codex 静默后生成。"
+    drive_path: "90_CODEX_PRIVATE_COLD_BACKUP/01_recovery-kit/codex-recovery-kit-preliminary-20260831.tar.zst"
+    sha256: "67c2a86f729a2dbc2b09bdc39db15bf506abd721771284aa9ff6cd526b042242"
+    size_bytes: 27111697
+    snapshot_kind: "preliminary live capture; SQLite core state made with sqlite .backup"
+    storage_mode: "plain tar.zst in user-authorized private Drive"
+    verification: "rclone check --one-way --checksum: 0 differences, 2026-08-31 UTC"
+    source_paths:
+      - ".codex/rules, skills, worktrees, visualizations, session_index/history metadata"
+      - "consistent SQLite backups of goals/state/memories/queue"
+    purpose: "让新 Codex 恢复工作方式的轻量核心；研究语义仍以 Git 文档为准。"
     exclusions:
       - "auth.json"
       - "secrets/**"
       - "config.toml* and official.config.toml"
       - "provider backup config.toml"
       - "cache/.tmp/tmp/ipc/daemon/control/locks/models cache/version/install IDs"
+    restore_required: false
+
+  - id: codex-live-context-preliminary-20260831
+    status: verified
+    retention: SENSITIVE_PRIVATE
+    project: codex
+    drive_path: "90_CODEX_PRIVATE_COLD_BACKUP/02_live-context/codex-live-context-preliminary-20260831.tar.zst"
+    sha256: "f78011525f4e704a796001ab7ec2b981eef1d00a818c25ccd6f671b0a6c2d19d"
+    size_bytes: 1865558550
+    snapshot_kind: "preliminary live capture; live SQLite databases copied with sqlite .backup"
+    storage_mode: "plain tar.zst in user-authorized private Drive"
+    verification: "rclone check --one-way --checksum: 0 differences, 2026-08-31 UTC"
+    source_paths:
+      - ".codex/sessions, attachments, archived_sessions"
+      - "consistent SQLite backups of logs and thread history"
+    purpose: "当前会话、附件与可回溯的本地历史；不是新智能体的默认知识入口。"
+    exclusions: ["auth.json", "secrets/**", "all config.toml variants", "cache/tmp/IPC/daemon state"]
+    restore_required: false
+
+  - id: codex-provider-history-preliminary-20260831
+    status: verified
+    retention: SENSITIVE_PRIVATE
+    project: codex
+    drive_path: "90_CODEX_PRIVATE_COLD_BACKUP/03_provider-history/codex-provider-history-preliminary-20260831.tar.zst"
+    sha256: "90fcfe36d736e586968348e86110912b62a84240932c4a3c9b69bebca00349e9"
+    size_bytes: 840029107
+    snapshot_kind: "preliminary live capture of provider-migration history"
+    storage_mode: "plain tar.zst in user-authorized private Drive"
+    verification: "rclone check --one-way --checksum: 0 differences, 2026-08-31 UTC"
+    source_paths:
+      - ".codex/provider-*-backup-*/sessions and archived_sessions"
+    purpose: "旧 provider 迁移留下的历史证据；可能与 live-context 重叠，但为回溯保留。"
+    exclusions: ["auth.json", "secrets/**", "provider backup config.toml", "cache/tmp"]
     restore_required: false
 
 excluded_or_metadata_only:
