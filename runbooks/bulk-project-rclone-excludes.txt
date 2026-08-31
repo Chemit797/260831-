@@ -1,0 +1,34 @@
+# Relative to /home/chenyuming/Project.  This is a broad research snapshot, not
+# a credential or environment backup.  The excluded staging trees are already
+# represented by verified Drive artifacts and must not be copied a second time.
+/260831-/**
+/.migration_stage.noCBD9/**
+/.codex_pre_snapshot.UFShO6/**
+/.restore_probe*/**
+/.bulk_migration_logs/**
+/.pytest_cache/**
+**/.venv/**
+**/venv/**
+**/.conda-env/**
+**/__pycache__/**
+**/.pytest_cache/**
+**/.mypy_cache/**
+**/.ruff_cache/**
+**/.ipynb_checkpoints/**
+**/.git/**
+**/*.pyc
+**/.env
+**/.env.*
+**/auth.json
+**/secrets/**
+**/.kaggle/**
+**/kaggle.json
+**/*credential*.json
+**/*credentials*.json
+**/*token*.json
+**/*secret*.json
+**/*secret*.txt
+**/*api_key*
+**/*.pem
+**/*.key
+**/id_rsa*

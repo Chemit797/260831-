@@ -8,11 +8,12 @@ Before inspecting code, downloading artifacts, or proposing research work, read:
 
 1. `00_请先读我_服务器迁移总蓝图.md`
 2. `MIGRATION_RECEIPT_20260831.md`
-3. `MIGRATION_STATUS.md`
-4. `docs/01_研究总览.md`
-5. `projects/goai-v7-active-learning/CURRENT_STATE.md` and `NEXT_STEPS.md`
-6. `docs/06_Codex_完整归档与恢复指南.md` only when Codex recovery/history matters.
-7. The relevant artifact/dataset manifest before requesting binary files.
+3. `BULK_MIGRATION_20260831.md` when a historical raw tree may be relevant.
+4. `MIGRATION_STATUS.md`
+5. `docs/01_研究总览.md`
+6. `projects/goai-v7-active-learning/CURRENT_STATE.md` and `NEXT_STEPS.md`
+7. `docs/06_Codex_完整归档与恢复指南.md` only when Codex recovery/history matters.
+8. The relevant artifact/dataset manifest before requesting binary files.
 
 ## Current research priority
 
