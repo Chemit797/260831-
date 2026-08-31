@@ -209,6 +209,8 @@ flowchart TD
 
 加密前和上传后都校验 SHA-256；Drive 文件 ID 写入 GitHub manifest。最终还要在另一目录或另一台机器上做一次恢复演练。
 
+控制仓库提供 `scripts/create_codex_encrypted_snapshot.sh`：它只接受 `age1...` 公钥、强制生成客户端加密的 `.age` 包，并明确排除认证和 config；它还使用 SQLite `.backup` 处理核心状态。运行前仍应让 Codex 静默，运行后将 `.age` 与 `.sha256` 上传到 `90_CODEX_PRIVATE_COLD_BACKUP/`，私钥只由用户个人保存。
+
 ## 9. 什么会被主动排除
 
 | 类别 | 原因 | 替代物 |
@@ -230,4 +232,3 @@ flowchart TD
 - `codex-full-history` 能独立解密和检索；
 - Biohub worktree 改动已经变成普通源码提交或可验证 patch；
 - 不含 token、私钥、`auth.json`、`secrets/` 的内容被上传到 GitHub 或普通 Drive 路径。
-
