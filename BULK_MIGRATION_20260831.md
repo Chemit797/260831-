@@ -92,10 +92,10 @@ rclone check <source> <drive-target> --one-way --checksum
 
 | 候选源项 | 量级 | 为什么优先 | Drive 目标 / 当前状态 |
 |---|---:|---|---|
-| `producers*`（一组被删除的 GO-AI run 输出） | 9.439 GiB | 夜间/score-sprint 的 OOF、prediction 等结果，可能不在当前 Project 直传树内 | canonical 为 `00_ARCHIVES/trash-go-ai-producers-full-20260831.parts/` 的 11 个 900 MiB 分卷；**正在串行上传**。完整 archive SHA-256：`198391ae…ed8acc0` |
+| `producers*`（一组被删除的 GO-AI run 输出） | 9.439 GiB | 夜间/score-sprint 的 OOF、prediction 等结果，可能不在当前 Project 直传树内 | canonical 为 `00_ARCHIVES/trash-go-ai-producers-full-20260831.parts/` 的 11 个 900 MiB 分卷；**已验证**：`rclone check --checksum` 报 `0 differences`（11 matching files）。完整 archive SHA-256：`198391ae…ed8acc0` |
 | `Go-AI-Optimal` | 218.6 MB | 被删除的项目 Git 工作树及未提交的经典模型报告 | `00_ARCHIVES/trash-go-ai-optimal-full-20260831.tar.zst`；**已验证**（SHA-256 `9f58cd9f…05525ee`，远端 0 differences） |
 | `phasea_smoke_ntHGJ9` | 238.7 MB | V7/calibration smoke 结果，与当前 runs 的哈希不完全相同 | `00_ARCHIVES/trash-phasea-smoke-full-20260831.tar.zst`；**已验证**（SHA-256 `85be56f3…2216e8`，远端 0 differences） |
-| M12 两个候选目录 | 约 390 MB | 可能含保留包之外的原始 CSV/运行证据 | `05_个人回收站研究恢复_20260831/04_m12_optional/`；可选、低于前三项优先级，尚未声明开始 |
+| M12 两个候选目录 | 约 390 MB | 可能含保留包之外的原始 CSV/运行证据 | `00_ARCHIVES/trash-goai-m12-raw-candidates-full-20260831.tar.zst`；**已验证**（SHA-256 `3bc613bc…c1d626`，远端 0 differences） |
 
 **明确排除：**本轮曾生成但已取消的 `bulk-biohub-data-full-20260831.tar.zst` 是为了误启动的 Biohub 原始 `data/` 备份而产生的临时文件；它不是研究资产，不属于上述候选，也绝不能被重新上传。对回收站执行操作时只能指定上表的精确目录，禁止使用“复制整个 Trash”或“清空 Trash”。
 
